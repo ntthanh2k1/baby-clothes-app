@@ -21,33 +21,41 @@ export class CustomerRepository
   async getCustomers(
     filterData: IFilterData,
   ): Promise<IPaginateData<Customer>> {
-    const { search, order_by, order_dir } = filterData;
-    const queryBuilder = super.getQueryBuilder().where(`cr.is_deleted = false`);
+    const { search, filters, order_by, order_dir } = filterData;
+    const queryBuilder = super
+      .getQueryBuilder()
+      .where(`entity.is_deleted = false`);
 
     if (search) {
       queryBuilder.andWhere(
         new Brackets((qb2) => {
           qb2
-            .orWhere('cr.code ILIKE :search')
-            .orWhere('cr.name ILIKE :search')
-            .orWhere('cr.phone_number ILIKE :search');
+            .orWhere('entity.code ILIKE :search')
+            .orWhere('entity.name ILIKE :search')
+            .orWhere('entity.phone_number ILIKE :search');
         }),
         { search: `%${search}%` },
       );
     }
 
+    if (filters.is_active) {
+      queryBuilder.andWhere('entity.is_active = :is_active', {
+        is_active: true,
+      });
+    }
+
     if (order_by && order_dir) {
       queryBuilder.orderBy(`${order_by}`, order_dir);
     } else {
-      queryBuilder.orderBy('cr.created_at', 'DESC');
+      queryBuilder.orderBy('entity.created_at', 'DESC');
     }
 
     queryBuilder.select([
-      'cr.customer_id',
-      'cr.code',
-      'cr.name',
-      'cr.phone_number',
-      'cr.is_active',
+      'entity.customer_id',
+      'entity.code',
+      'entity.name',
+      'entity.phone_number',
+      'entity.is_active',
     ]);
 
     const customers = await super.getAll(queryBuilder, filterData);

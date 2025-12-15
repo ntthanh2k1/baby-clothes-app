@@ -15,20 +15,19 @@ export class CustomerService {
     private readonly customerRepository: ICustomerRepository,
   ) {}
 
-  async create(createCustomerDto: CreateCustomerDto) {
+  async createCustomer(createCustomerDto: CreateCustomerDto) {
     const code = createCode('CR');
-    const newCustomer = await this.customerRepository.create({
+    await this.customerRepository.create({
       code,
       ...createCustomerDto,
     });
 
     return {
       message: 'Create customer successfully.',
-      data: newCustomer,
     };
   }
 
-  async findAll(getCustomersDto: GetCustomersDto) {
+  async getCustomers(getCustomersDto: GetCustomersDto) {
     const { page, limit, search, order_by, order_dir, ...rest } =
       getCustomersDto;
     const filters = {};
@@ -50,7 +49,7 @@ export class CustomerService {
     return customers;
   }
 
-  async findOne(id: string) {
+  async getCustomer(id: string) {
     const currentCustomer = await this.customerRepository.getCustomer({
       customer_id: id,
     });
@@ -64,19 +63,28 @@ export class CustomerService {
     };
   }
 
-  async update(id: string, updateCustomerDto: UpdateCustomerDto) {
-    const currentCustomer = await this.findOne(id);
+  async updateCustomer(id: string, updateCustomerDto: UpdateCustomerDto) {
     const updatedCustomer = await this.customerRepository.update(
       id,
       updateCustomerDto,
     );
+
+    if (!updatedCustomer) {
+      throw new NotFoundException('Customer not found.');
+    }
 
     return {
       message: 'Update customer successfully.',
     };
   }
 
-  async remove(id: string) {
+  async deleteCustomer(id: string) {
+    const updatedCustomer = await this.customerRepository.delete(id);
+
+    if (!updatedCustomer) {
+      throw new NotFoundException('Customer not found.');
+    }
+
     return {
       message: 'Delete customer successfully.',
     };

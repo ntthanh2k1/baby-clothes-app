@@ -1,7 +1,6 @@
 import { Brackets, QueryRunner, Repository, SelectQueryBuilder } from 'typeorm';
 import { IBaseRepository } from './base-repository.interface';
 import { IFilterData } from '../interfaces/filter-data.interface';
-import { IPaginateData } from '../interfaces/paginate-data.interface';
 
 export class BaseRepository<T> implements IBaseRepository<T> {
   protected entity = 'entity';
@@ -28,8 +27,8 @@ export class BaseRepository<T> implements IBaseRepository<T> {
     return queryBuilder;
   }
 
-  async create(data: Partial<T>): Promise<T> {
-    return await this.repository.save(data as any);
+  async create(data: Partial<T>): Promise<void> {
+    await this.repository.save(data as any);
   }
 
   async getAll(queryBuilder: SelectQueryBuilder<T>, filterData: IFilterData) {
@@ -93,32 +92,27 @@ export class BaseRepository<T> implements IBaseRepository<T> {
     return await queryBuilder.getOne();
   }
 
-  async update(id: number | string, data: Partial<T>): Promise<T | null> {
-    const existing = await this.repository.findOne({
-      where: { [this.primaryKey]: id } as any,
-    });
+  async update(id: number | string, data: Partial<T>): Promise<boolean> {
+    const result = await this.repository.update(
+      { [this.primaryKey]: id } as any,
+      {
+        ...data,
+      } as any,
+    );
 
-    if (!existing) {
-      return null;
-    }
-
-    return await this.repository.save({ ...existing, ...data });
+    return result.affected > 0;
   }
 
-  async delete(id: number | string, userId: string): Promise<T | null> {
-    const existing = await this.repository.findOne({
-      where: { [this.primaryKey]: id } as any,
-    });
+  async delete(id: number | string, userId?: string): Promise<boolean> {
+    const result = await this.repository.update(
+      { [this.primaryKey]: id } as any,
+      {
+        is_deleted: true,
+        updated_by: userId,
+      } as any,
+    );
 
-    if (!existing) {
-      return null;
-    }
-
-    return await this.repository.save({
-      ...existing,
-      is_deleted: true,
-      updated_by: userId,
-    });
+    return result.affected > 0;
   }
 
   protected applySearching(
