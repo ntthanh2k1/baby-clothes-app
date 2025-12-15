@@ -1,29 +1,27 @@
 import {
   BadRequestException,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
 import { createCode } from 'src/common/utils/create-code';
 import { hashPassword } from 'src/common/utils/create-password';
 import { GetUsersDto } from './dto/get-users.dto';
-import { paginate } from 'src/common/interfaces/paginate-data.interface';
+import {
+  IUserRepo,
+  IUserRepository,
+} from './interfaces/user-repository.interface';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @Inject(IUserRepo) private readonly userRepository: IUserRepository,
   ) {}
   async createUser(createUserDto: CreateUserDto) {
     const { username } = createUserDto;
-
-    const currentUser = await this.userRepository.findOne({
-      where: { username },
-    });
+    const currentUser = await this.userRepository.getUser({ username });
 
     if (currentUser) {
       throw new BadRequestException('User already exists.');
@@ -31,7 +29,7 @@ export class UserService {
 
     const code = createCode('UR');
     const hashedPassword = await hashPassword('123456');
-    const newUser = await this.userRepository.save({
+    const newUser = await this.userRepository.create({
       code,
       ...createUserDto,
       password: hashedPassword,
@@ -44,74 +42,52 @@ export class UserService {
         code: newUser.code,
         name: newUser.name,
         username: newUser.username,
+        image: newUser.image,
         phone_number: newUser.phone_number,
         email: newUser.email,
+        citizen_id: newUser.citizen_id,
+        tax_number: newUser.tax_number,
+        gender: newUser.gender,
+        birth_date: newUser.birth_date,
+        address: newUser.address,
+        note: newUser.note,
+        is_active: newUser.is_active,
       },
     };
   }
 
   async getUsers(getUsersDto: GetUsersDto) {
-    const { page, limit, search, is_active, order_by, order_dir } = getUsersDto;
-    const queryBuilder = this.userRepository
-      .createQueryBuilder('entity')
-      .where('is_deleted = false');
+    const { page, limit, search, order_by, order_dir, ...rest } = getUsersDto;
+    const search_columns = ['code', 'name', 'username', 'phone_number'];
+    const filters = {};
+    const filterArray = Object.entries(rest);
 
-    if (search) {
-      queryBuilder.andWhere(
-        `
-        entity.code ILIKE :search
-        OR entity.name ILIKE :search
-        OR entity.username ILIKE :search
-        `,
-        { search: `%${search}%` },
-      );
+    for (let i = 0; i < filterArray.length; i++) {
+      const [key, value] = filterArray[i];
+
+      if (value === undefined) {
+        continue;
+      }
+
+      filters[key] = value;
     }
 
-    if (is_active) {
-      queryBuilder.andWhere('entity.is_active = :is_active', { is_active });
-    }
+    const filterData = {
+      page,
+      limit,
+      search,
+      search_columns,
+      filters,
+      order_by,
+      order_dir,
+    };
+    const users = await this.userRepository.getUsers(filterData);
 
-    if (order_by && order_dir) {
-      queryBuilder.orderBy(order_by, order_dir);
-    } else {
-      queryBuilder.orderBy('entity.created_at', 'DESC');
-    }
-
-    if (page && limit) {
-      queryBuilder.skip((page - 1) * limit).take(limit);
-    }
-
-    queryBuilder.select([
-      'entity.user_id',
-      'entity.code',
-      'entity.name',
-      'entity.username',
-      'entity.phone_number',
-      'entity.email',
-      'entity.is_active',
-    ]);
-
-    const [data, totalRecords] = await queryBuilder.getManyAndCount();
-    const paginatedResult = paginate(data, page, limit, totalRecords);
-
-    return paginatedResult;
+    return users;
   }
 
   async getUser(id: string) {
-    const currentUser = await this.userRepository
-      .createQueryBuilder('entity')
-      .where('entity.user_id = :id', { id })
-      .andWhere('entity.is_deleted = false')
-      .select([
-        'entity.user_id',
-        'entity.code',
-        'entity.name',
-        'entity.username',
-        'entity.phone_number',
-        'entity.email',
-        'entity.is_active',
-      ])
-      .getOne();
+    const currentUser = await this.userRepository.getUser({ user_id: id });
 
     if (!currentUser) {
       throw new NotFoundException('User not found.');
@@ -123,25 +99,39 @@ export class UserService {
   }
 
   async updateUser(id: string, updateUserDto: UpdateUserDto) {
-    const currentUser = await this.getUser(id);
-    const updatedUser = await this.userRepository.save({
-      ...currentUser.data,
-      ...updateUserDto,
-    });
+    const updatedUser = await this.userRepository.update(id, updateUserDto);
+
+    if (!updatedUser) {
+      throw new NotFoundException('User not found.');
+    }
 
     return {
       message: 'Update user successfully.',
-      data: updatedUser,
+      data: {
+        user_id: updatedUser.user_id,
+        code: updatedUser.code,
+        name: updatedUser.name,
+        username: updatedUser.username,
+        image: updatedUser.image,
+        phone_number: updatedUser.phone_number,
+        email: updatedUser.email,
+        citizen_id: updatedUser.citizen_id,
+        tax_number: updatedUser.tax_number,
+        gender: updatedUser.gender,
+        birth_date: updatedUser.birth_date,
+        address: updatedUser.address,
+        note: updatedUser.note,
+        is_active: updatedUser.is_active,
+      },
     };
   }
 
   async deleteUser(id: string) {
-    const currentUser = await this.getUser(id);
+    const updatedUser = await this.userRepository.delete(id);
 
-    await this.userRepository.save({
-      ...currentUser.data,
-      is_deleted: true,
-    });
+    if (!updatedUser) {
+      throw new NotFoundException('User not found.');
+    }
 
     return {
       message: 'Delete user successfully.',

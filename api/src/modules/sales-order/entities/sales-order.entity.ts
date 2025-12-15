@@ -2,15 +2,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('sale_order')
-export class SaleOrder {
+@Entity('sales_order')
+export class SalesOrder {
   @PrimaryGeneratedColumn('uuid')
-  sale_order_id: string;
+  sales_order_id: string;
 
   @Column({ type: 'uuid', nullable: true })
   user_id: string;

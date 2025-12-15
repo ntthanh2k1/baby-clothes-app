@@ -27,14 +27,33 @@ export class BaseRepository<T> implements IBaseRepository<T> {
     return queryBuilder;
   }
 
-  async create(data: Partial<T>): Promise<void> {
-    await this.repository.save(data as any);
+  async create(data: Partial<T>): Promise<T> {
+    return await this.repository.save(data as any);
   }
 
   async getAll(queryBuilder: SelectQueryBuilder<T>, filterData: IFilterData) {
-    const { page, limit } = filterData;
+    const {
+      page,
+      limit,
+      search,
+      search_columns,
+      filters,
+      order_by,
+      order_dir,
+    } = filterData;
 
-    // pagination
+    queryBuilder.where(`entity.is_deleted = false`);
+
+    // searching
+    this.applySearching(queryBuilder, search, search_columns);
+
+    // filtering
+    this.applyFiltering(queryBuilder, filters);
+
+    // sorting
+    this.applySorting(queryBuilder, order_by, order_dir);
+
+    // paging
     const safePage = page && page > 0 ? page : 1;
     const safeLimit = limit && limit > 0 ? limit : 10;
 
@@ -54,56 +73,31 @@ export class BaseRepository<T> implements IBaseRepository<T> {
     };
   }
 
-  // async getAllV2(
-  //   queryBuilder: SelectQueryBuilder<T>,
-  //   filterData: IFilterData,
-  // ): Promise<IPaginateData<T>> {
-  //   const { page, limit, order_by, order_dir } = filterData;
-
-  //   // sorting
-  //   this.applySorting(queryBuilder, order_by, order_dir);
-
-  //   // pagination
-  //   const safePage = page && page > 0 ? page : 1;
-  //   const safeLimit = limit && limit > 0 ? limit : 10;
-
-  //   this.applyPaging(queryBuilder, safePage, safeLimit);
-
-  //   const [data, totalRecords] = await queryBuilder.getManyAndCount();
-  //   const totalPages = Math.ceil(totalRecords / safeLimit);
-
-  //   return {
-  //     data,
-  //     page: safePage,
-  //     limit: safeLimit,
-  //     total_records: totalRecords,
-  //     total_pages: totalPages,
-  //     has_prev: safePage > 1,
-  //     has_next: safePage < totalPages,
-  //   };
-  // }
-
   async getOneBy(
     queryBuilder: SelectQueryBuilder<T>,
     condition: Partial<T>,
   ): Promise<T | null> {
+    queryBuilder.where(`entity.is_deleted = false`);
     this.applyFiltering(queryBuilder, condition as any);
 
-    return await queryBuilder.getOne();
+    const current = await queryBuilder.getOne();
+
+    if (!current) {
+      return null;
+    }
+
+    return current;
   }
 
-  async update(id: number | string, data: Partial<T>): Promise<boolean> {
-    const result = await this.repository.update(
-      { [this.primaryKey]: id } as any,
-      {
-        ...data,
-      } as any,
-    );
+  async update(id: string, data: Partial<T>): Promise<T | null> {
+    const existing = await this.getOneBy(this.getQueryBuilder(), {
+      [this.primaryKey]: id,
+    } as any);
 
-    return result.affected > 0;
+    return await this.repository.save({ ...existing, ...data } as any);
   }
 
-  async delete(id: number | string, userId?: string): Promise<boolean> {
+  async delete(id: string, userId?: string): Promise<boolean> {
     const result = await this.repository.update(
       { [this.primaryKey]: id } as any,
       {
@@ -118,23 +112,21 @@ export class BaseRepository<T> implements IBaseRepository<T> {
   protected applySearching(
     queryBuilder: SelectQueryBuilder<T>,
     search?: string,
-    searchColumns?: (keyof T)[],
+    searchColumns?: string[],
   ) {
     if (search && searchColumns?.length) {
       queryBuilder.andWhere(
         new Brackets((qb) => {
           for (let i = 0; i < searchColumns.length; i++) {
             const col = searchColumns[i];
-            const param = `search_${i}`;
-            const colStr = col.toString().includes('.')
-              ? col.toString()
-              : `${this.entity}.${col.toString()}`;
+            const colStr = col.includes('.') ? col : `${this.entity}.${col}`;
 
-            qb.orWhere(`${colStr as string} ILIKE :${param}`, {
-              [param]: `%${search}%`,
-            });
+            qb.orWhere(`${colStr} ILIKE :search`);
           }
         }),
+        {
+          search: `%${search}%`,
+        },
       );
     }
 

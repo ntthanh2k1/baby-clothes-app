@@ -5,6 +5,8 @@ export interface IFilterData {
 
   search: string;
 
+  search_columns: string[];
+
   filters: Record<string, any>;
 
   order_by: string;

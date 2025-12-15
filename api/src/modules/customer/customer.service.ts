@@ -17,33 +17,43 @@ export class CustomerService {
 
   async createCustomer(createCustomerDto: CreateCustomerDto) {
     const code = createCode('CR');
-    await this.customerRepository.create({
+    const newCustomer = await this.customerRepository.create({
       code,
       ...createCustomerDto,
     });
 
     return {
       message: 'Create customer successfully.',
+      data: newCustomer,
     };
   }
 
   async getCustomers(getCustomersDto: GetCustomersDto) {
     const { page, limit, search, order_by, order_dir, ...rest } =
       getCustomersDto;
+    const search_columns = ['code', 'name', 'phone_number'];
     const filters = {};
     const filterArray = Object.entries(rest);
 
     for (let i = 0; i < filterArray.length; i++) {
       const [key, value] = filterArray[i];
 
-      if (!value) {
+      if (value === undefined) {
         continue;
       }
 
       filters[key] = value;
     }
 
-    const filterData = { page, limit, search, filters, order_by, order_dir };
+    const filterData = {
+      page,
+      limit,
+      search,
+      search_columns,
+      filters,
+      order_by,
+      order_dir,
+    };
     const customers = await this.customerRepository.getCustomers(filterData);
 
     return customers;
@@ -75,6 +85,7 @@ export class CustomerService {
 
     return {
       message: 'Update customer successfully.',
+      data: updatedCustomer,
     };
   }
 

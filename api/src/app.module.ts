@@ -7,8 +7,8 @@ import { TypeOrmConfig } from './config/database/typeorm.config';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ProductModule } from './modules/product/product.module';
-import { SaleOrderModule } from './modules/sale-order/sale-order.module';
 import { CustomerModule } from './modules/customer/customer.module';
+import { SalesOrderModule } from './modules/sales-order/sales-order.module';
 
 @Module({
   imports: [
@@ -21,8 +21,8 @@ import { CustomerModule } from './modules/customer/customer.module';
     UserModule,
     AuthModule,
     ProductModule,
-    SaleOrderModule,
     CustomerModule,
+    SalesOrderModule,
   ],
   controllers: [AppController],
   providers: [AppService],
