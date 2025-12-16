@@ -32,20 +32,13 @@ export class BaseRepository<T> implements IBaseRepository<T> {
   }
 
   async getAll(queryBuilder: SelectQueryBuilder<T>, filterData: IFilterData) {
-    const {
-      page,
-      limit,
-      search,
-      search_columns,
-      filters,
-      order_by,
-      order_dir,
-    } = filterData;
+    const { page, limit, search, search_by, filters, order_by, order_dir } =
+      filterData;
 
     queryBuilder.where(`entity.is_deleted = false`);
 
     // searching
-    this.applySearching(queryBuilder, search, search_columns);
+    this.applySearching(queryBuilder, search, search_by);
 
     // filtering
     this.applyFiltering(queryBuilder, filters);
@@ -80,13 +73,13 @@ export class BaseRepository<T> implements IBaseRepository<T> {
     queryBuilder.where(`entity.is_deleted = false`);
     this.applyFiltering(queryBuilder, condition as any);
 
-    const current = await queryBuilder.getOne();
+    const existing = await queryBuilder.getOne();
 
-    if (!current) {
+    if (!existing) {
       return null;
     }
 
-    return current;
+    return existing;
   }
 
   async update(id: string, data: Partial<T>): Promise<T | null> {
@@ -112,13 +105,13 @@ export class BaseRepository<T> implements IBaseRepository<T> {
   protected applySearching(
     queryBuilder: SelectQueryBuilder<T>,
     search?: string,
-    searchColumns?: string[],
+    searchBy?: string[],
   ) {
-    if (search && searchColumns?.length) {
+    if (search && searchBy?.length) {
       queryBuilder.andWhere(
         new Brackets((qb) => {
-          for (let i = 0; i < searchColumns.length; i++) {
-            const col = searchColumns[i];
+          for (let i = 0; i < searchBy.length; i++) {
+            const col = searchBy[i];
             const colStr = col.includes('.') ? col : `${this.entity}.${col}`;
 
             qb.orWhere(`${colStr} ILIKE :search`);

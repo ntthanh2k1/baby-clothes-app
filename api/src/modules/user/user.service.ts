@@ -58,7 +58,7 @@ export class UserService {
 
   async getUsers(getUsersDto: GetUsersDto) {
     const { page, limit, search, order_by, order_dir, ...rest } = getUsersDto;
-    const search_columns = ['code', 'name', 'username', 'phone_number'];
+    const searchBy = ['code', 'name', 'username', 'phone_number'];
     const filters = {};
     const filterArray = Object.entries(rest);
 
@@ -76,7 +76,7 @@ export class UserService {
       page,
       limit,
       search,
-      search_columns,
+      search_by: searchBy,
       filters,
       order_by,
       order_dir,

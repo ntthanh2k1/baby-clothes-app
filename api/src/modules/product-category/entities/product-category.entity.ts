@@ -6,12 +6,9 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('product')
-export class Product {
+@Entity('product_category')
+export class ProductCategory {
   @PrimaryGeneratedColumn('uuid')
-  product_id: string;
-
-  @Column({ type: 'uuid', nullable: true })
   product_category_id: string;
 
   @Column({ type: 'varchar', length: 32, nullable: true })
@@ -19,15 +16,6 @@ export class Product {
 
   @Column({ type: 'varchar', length: 256, nullable: true })
   name: string;
-
-  @Column({ type: 'int', default: 0 })
-  cost: number;
-
-  @Column({ type: 'int', default: 0 })
-  rent_price: number;
-
-  @Column({ type: 'int', default: 0 })
-  sale_price: number;
 
   @Column({ type: 'varchar', nullable: true })
   note: string;

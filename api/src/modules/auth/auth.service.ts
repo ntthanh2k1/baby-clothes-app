@@ -62,4 +62,10 @@ export class AuthService {
       message: 'Logout successfully.',
     };
   }
+
+  async getProfile(authUser: any) {
+    return {
+      data: authUser,
+    };
+  }
 }

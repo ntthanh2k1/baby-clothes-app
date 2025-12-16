@@ -3,16 +3,15 @@ import {
   Get,
   Post,
   Body,
-  Patch,
-  Param,
-  Delete,
   Res,
   Req,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { Request, Response } from 'express';
 import { ConfigService } from '@nestjs/config';
+import { AuthGuard } from './guards/auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -43,5 +42,13 @@ export class AuthController {
     res.clearCookie('access_token');
 
     return await this.authService.logout();
+  }
+
+  @Get('profile')
+  @UseGuards(AuthGuard)
+  async getProfile(@Req() req: Request) {
+    const authUser = req['auth_user'];
+
+    return await this.authService.getProfile(authUser);
   }
 }

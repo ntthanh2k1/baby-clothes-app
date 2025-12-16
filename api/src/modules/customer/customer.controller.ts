@@ -21,30 +21,30 @@ export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}
 
   @Post()
-  createCustomer(@Body() createCustomerDto: CreateCustomerDto) {
-    return this.customerService.createCustomer(createCustomerDto);
+  async createCustomer(@Body() createCustomerDto: CreateCustomerDto) {
+    return await this.customerService.createCustomer(createCustomerDto);
   }
 
   @Get()
-  getCustomers(@Query() getCustomersDto: GetCustomersDto) {
-    return this.customerService.getCustomers(getCustomersDto);
+  async getCustomers(@Query() getCustomersDto: GetCustomersDto) {
+    return await this.customerService.getCustomers(getCustomersDto);
   }
 
   @Get(':id')
-  getCustomer(@Param('id') id: string) {
-    return this.customerService.getCustomer(id);
+  async getCustomer(@Param('id') id: string) {
+    return await this.customerService.getCustomer(id);
   }
 
   @Patch(':id')
-  updateCustomer(
+  async updateCustomer(
     @Param('id') id: string,
     @Body() updateCustomerDto: UpdateCustomerDto,
   ) {
-    return this.customerService.updateCustomer(id, updateCustomerDto);
+    return await this.customerService.updateCustomer(id, updateCustomerDto);
   }
 
   @Delete(':id')
-  deleteCustomer(@Param('id') id: string) {
-    return this.customerService.deleteCustomer(id);
+  async deleteCustomer(@Param('id') id: string) {
+    return await this.customerService.deleteCustomer(id);
   }
 }

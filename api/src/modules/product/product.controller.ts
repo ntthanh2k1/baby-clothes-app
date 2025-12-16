@@ -22,17 +22,17 @@ export class ProductController {
 
   @Post()
   async createProduct(@Body() createProductDto: CreateProductDto) {
-    return this.productService.createProduct(createProductDto);
+    return await this.productService.createProduct(createProductDto);
   }
 
   @Get()
   async getProducts(@Query() getProductsDto: GetProductsDto) {
-    return this.productService.getProducts(getProductsDto);
+    return await this.productService.getProducts(getProductsDto);
   }
 
   @Get(':id')
   async getProduct(@Param('id') id: string) {
-    return this.productService.getProduct(id);
+    return await this.productService.getProduct(id);
   }
 
   @Patch(':id')
@@ -40,11 +40,11 @@ export class ProductController {
     @Param('id') id: string,
     @Body() updateProductDto: UpdateProductDto,
   ) {
-    return this.productService.updateProduct(id, updateProductDto);
+    return await this.productService.updateProduct(id, updateProductDto);
   }
 
   @Delete(':id')
   async deleteProduct(@Param('id') id: string) {
-    return this.productService.deleteProduct(id);
+    return await this.productService.deleteProduct(id);
   }
 }

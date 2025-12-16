@@ -21,13 +21,13 @@ export class CustomerRepository
   async getCustomers(
     filterData: IFilterData,
   ): Promise<IPaginateData<Customer>> {
-    const { search_columns, filters } = filterData;
+    const { search_by, filters } = filterData;
     const queryBuilder = super.getQueryBuilder();
 
     // logic mẫu xử lý search
-    let indexSearch = search_columns.indexOf('code');
+    let indexSearch = search_by.indexOf('code');
     if (indexSearch !== -1) {
-      search_columns[indexSearch] = 'entity.code';
+      search_by[indexSearch] = 'entity.code';
     }
 
     // logic mẫu xử lý filter
