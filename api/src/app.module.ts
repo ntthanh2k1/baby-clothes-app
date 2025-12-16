@@ -9,7 +9,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { ProductModule } from './modules/product/product.module';
 import { CustomerModule } from './modules/customer/customer.module';
 import { SalesOrderModule } from './modules/sales-order/sales-order.module';
-import { ProductCategoryModule } from './modules/product-category/product-category.module';
+import { CategoryModule } from './modules/category/category.module';
 
 @Module({
   imports: [
@@ -24,7 +24,7 @@ import { ProductCategoryModule } from './modules/product-category/product-catego
     ProductModule,
     CustomerModule,
     SalesOrderModule,
-    ProductCategoryModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

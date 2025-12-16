@@ -1,6 +1,6 @@
 import { IsOptional } from 'class-validator';
 
-export class GetProductCategoriesDto {
+export class GetCategoriesDto {
   @IsOptional()
   page?: number;
 
