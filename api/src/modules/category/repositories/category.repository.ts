@@ -26,6 +26,7 @@ export class CategoryRepository
       'entity.category_id',
       'entity.code',
       'entity.name',
+      'entity.type',
       'entity.is_active',
     ]);
 

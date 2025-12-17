@@ -1,26 +1,41 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Product } from './entities/product.entity';
-import { Repository } from 'typeorm';
 import { createCode } from 'src/common/utils/create-code';
 import { GetProductsDto } from './dto/get-products.dto';
-import { paginate } from 'src/common/interfaces/paginate-data.interface';
+import {
+  IProductRepo,
+  IProductRepository,
+} from './interfaces/product-repository.interface';
+import { ProductCategoryService } from '../product-category/product-category.service';
 
 @Injectable()
 export class ProductService {
   constructor(
-    @InjectRepository(Product)
-    private readonly productRepository: Repository<Product>,
+    @Inject(IProductRepo)
+    private readonly productRepository: IProductRepository,
+    private readonly productCategoryService: ProductCategoryService,
   ) {}
 
   async createProduct(createProductDto: CreateProductDto) {
+    const { product_categories, ...productDto } = createProductDto;
     const code = createCode('PT');
-    const newProduct = await this.productRepository.save({
+    const newProduct = await this.productRepository.create({
       code,
-      ...createProductDto,
+      ...productDto,
     });
+
+    for (let i = 0; i < product_categories.length; i++) {
+      await this.productCategoryService.createProductCategory({
+        product_id: newProduct.product_id,
+        category_id: product_categories[i],
+      });
+    }
 
     return {
       message: 'Create product successfully.',
@@ -29,69 +44,44 @@ export class ProductService {
   }
 
   async getProducts(getProductsDto: GetProductsDto) {
-    const { page, limit, search, is_active, order_by, order_dir } =
-      getProductsDto;
-    const queryBuilder = this.productRepository
-      .createQueryBuilder('entity')
-      .where('entity.is_deleted = false');
+    try {
+      const { page, limit, search, order_by, order_dir, ...rest } =
+        getProductsDto;
+      const searchBy = ['code', 'name', 'category_name'];
+      const filters = {};
+      const filterArray = Object.entries(rest);
 
-    if (search) {
-      queryBuilder.andWhere(
-        `
-        entity.code ILIKE :search
-        OR entity.name ILIKE :search
-        `,
-        {
-          search: `%${search}%`,
-        },
-      );
+      for (let i = 0; i < filterArray.length; i++) {
+        const [key, value] = filterArray[i];
+
+        if (value === undefined) {
+          continue;
+        }
+
+        filters[key] = value;
+      }
+
+      const filterData = {
+        page,
+        limit,
+        search,
+        search_by: searchBy,
+        filters,
+        order_by,
+        order_dir,
+      };
+      const products = await this.productRepository.getProducts(filterData);
+
+      return products;
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
     }
-
-    if (is_active) {
-      queryBuilder.andWhere('entity.is_active = :is_active', { is_active });
-    }
-
-    if (order_by && order_dir) {
-      queryBuilder.orderBy(`${order_by}`, order_dir);
-    } else {
-      queryBuilder.orderBy('entity.created_at', 'DESC');
-    }
-
-    if (page && limit) {
-      queryBuilder.skip((page - 1) * limit).take(limit);
-    }
-
-    queryBuilder.select([
-      'entity.product_id',
-      'entity.code',
-      'entity.name',
-      'entity.cost',
-      'entity.rent_price',
-      'entity.sale_price',
-      'entity.is_active',
-    ]);
-
-    const [data, totalRecords] = await queryBuilder.getManyAndCount();
-    const paginatedResult = paginate(data, page, limit, totalRecords);
-
-    return paginatedResult;
   }
 
   async getProduct(id: string) {
-    const currentProduct = await this.productRepository
-      .createQueryBuilder('entity')
-      .where('entity.product_id = :id', { id })
-      .andWhere('entity.is_deleted = false')
-      .select([
-        'entity.product_id',
-        'entity.code',
-        'entity.name',
-        'entity.cost',
-        'entity.rent_price',
-        'entity.sale_price',
-        'entity.is_active',
-      ])
-      .getOne();
+    const currentProduct = await this.productRepository.getProduct({
+      product_id: id,
+    });
 
     if (!currentProduct) {
       throw new NotFoundException('Product not found.');
@@ -103,11 +93,12 @@ export class ProductService {
   }
 
   async updateProduct(id: string, updateProductDto: UpdateProductDto) {
-    const currentProduct = await this.getProduct(id);
-    const updatedProduct = await this.productRepository.save({
-      ...currentProduct.data,
-      ...updateProductDto,
-    });
+    const { product_categories, ...productDto } = updateProductDto;
+    const updatedProduct = await this.productRepository.update(id, productDto);
+
+    if (!updatedProduct) {
+      throw new NotFoundException('Product not found.');
+    }
 
     return {
       message: 'Update product successfully.',
@@ -116,12 +107,11 @@ export class ProductService {
   }
 
   async deleteProduct(id: string) {
-    const currentProduct = await this.getProduct(id);
+    const updatedProduct = await this.productRepository.delete(id);
 
-    await this.productRepository.save({
-      ...currentProduct.data,
-      is_deleted: true,
-    });
+    if (!updatedProduct) {
+      throw new NotFoundException('Product not found.');
+    }
 
     return {
       message: 'Delete product successfully.',

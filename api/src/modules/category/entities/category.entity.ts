@@ -2,14 +2,22 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { CategoryType } from '../enums/category-type.enum';
+import { ProductCategory } from 'src/modules/product-category/entities/product-category.entity';
 
 @Entity('category')
 export class Category {
   @PrimaryGeneratedColumn('uuid')
   category_id: string;
+
+  @Column({ type: 'uuid', nullable: true })
+  parent_id: string;
 
   @Column({ type: 'varchar', length: 32, nullable: true })
   code: string;
@@ -18,7 +26,7 @@ export class Category {
   name: string;
 
   @Column({ type: 'varchar', length: 32, nullable: true })
-  type: string;
+  type: CategoryType;
 
   @Column({ type: 'varchar', nullable: true })
   note: string;
@@ -40,4 +48,25 @@ export class Category {
 
   @Column({ type: 'varchar', length: 256, nullable: true })
   updated_by: string;
+
+  @OneToMany(() => Category, (category) => category.parent, {
+    createForeignKeyConstraints: false,
+  })
+  categories: Category[];
+
+  @OneToMany(
+    () => ProductCategory,
+    (productCategory) => productCategory.category,
+    {
+      createForeignKeyConstraints: false,
+    },
+  )
+  product_categories: ProductCategory[];
+
+  @ManyToOne(() => Category, (parent) => parent.categories, {
+    nullable: true,
+    createForeignKeyConstraints: false,
+  })
+  @JoinColumn({ name: 'parent_id' })
+  parent: Category;
 }

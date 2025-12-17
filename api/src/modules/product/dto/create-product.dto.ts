@@ -15,4 +15,7 @@ export class CreateProductDto {
 
   @IsOptional()
   note?: string;
+
+  @IsOptional()
+  product_categories?: string[];
 }

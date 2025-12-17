@@ -1,7 +1,9 @@
+import { ProductCategory } from 'src/modules/product-category/entities/product-category.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -10,9 +12,6 @@ import {
 export class Product {
   @PrimaryGeneratedColumn('uuid')
   product_id: string;
-
-  @Column({ type: 'uuid', nullable: true })
-  category_id: string;
 
   @Column({ type: 'varchar', length: 32, nullable: true })
   code: string;
@@ -49,4 +48,13 @@ export class Product {
 
   @Column({ type: 'varchar', length: 256, nullable: true })
   updated_by: string;
+
+  @OneToMany(
+    () => ProductCategory,
+    (productCategory) => productCategory.product,
+    {
+      createForeignKeyConstraints: false,
+    },
+  )
+  product_categories: ProductCategory[];
 }

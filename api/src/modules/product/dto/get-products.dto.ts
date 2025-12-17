@@ -14,6 +14,9 @@ export class GetProductsDto {
   is_active?: boolean;
 
   @IsOptional()
+  category_id?: string;
+
+  @IsOptional()
   order_by?: string;
 
   @IsOptional()
