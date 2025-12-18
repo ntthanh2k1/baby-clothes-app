@@ -13,6 +13,7 @@ import {
   IUserRepo,
   IUserRepository,
 } from './interfaces/user-repository.interface';
+import { assignFilters } from 'src/common/utils/assign-filters';
 
 @Injectable()
 export class UserService {
@@ -37,41 +38,15 @@ export class UserService {
 
     return {
       message: 'Create user successfully.',
-      data: {
-        user_id: newUser.user_id,
-        code: newUser.code,
-        name: newUser.name,
-        username: newUser.username,
-        image: newUser.image,
-        phone_number: newUser.phone_number,
-        email: newUser.email,
-        citizen_id: newUser.citizen_id,
-        tax_number: newUser.tax_number,
-        gender: newUser.gender,
-        birth_date: newUser.birth_date,
-        address: newUser.address,
-        note: newUser.note,
-        is_active: newUser.is_active,
-      },
+      data: newUser,
     };
   }
 
   async getUsers(getUsersDto: GetUsersDto) {
     const { page, limit, search, order_by, order_dir, ...rest } = getUsersDto;
     const searchBy = ['code', 'name', 'username', 'phone_number'];
-    const filters = {};
-    const filterArray = Object.entries(rest);
-
-    for (let i = 0; i < filterArray.length; i++) {
-      const [key, value] = filterArray[i];
-
-      if (value === undefined) {
-        continue;
-      }
-
-      filters[key] = value;
-    }
-
+    const filters: Record<string, any> = {};
+    assignFilters(rest, filters);
     const filterData = {
       page,
       limit,
@@ -99,39 +74,21 @@ export class UserService {
   }
 
   async updateUser(id: string, updateUserDto: UpdateUserDto) {
-    const updatedUser = await this.userRepository.update(id, updateUserDto);
-
-    if (!updatedUser) {
-      throw new NotFoundException('User not found.');
-    }
+    const currentUser = await this.getUser(id);
+    const updatedUser = await this.userRepository.update(
+      currentUser.data,
+      updateUserDto,
+    );
 
     return {
       message: 'Update user successfully.',
-      data: {
-        user_id: updatedUser.user_id,
-        code: updatedUser.code,
-        name: updatedUser.name,
-        username: updatedUser.username,
-        image: updatedUser.image,
-        phone_number: updatedUser.phone_number,
-        email: updatedUser.email,
-        citizen_id: updatedUser.citizen_id,
-        tax_number: updatedUser.tax_number,
-        gender: updatedUser.gender,
-        birth_date: updatedUser.birth_date,
-        address: updatedUser.address,
-        note: updatedUser.note,
-        is_active: updatedUser.is_active,
-      },
+      data: updatedUser,
     };
   }
 
   async deleteUser(id: string) {
-    const updatedUser = await this.userRepository.delete(id);
-
-    if (!updatedUser) {
-      throw new NotFoundException('User not found.');
-    }
+    const currentUser = await this.getUser(id);
+    await this.userRepository.delete(currentUser.data);
 
     return {
       message: 'Delete user successfully.',

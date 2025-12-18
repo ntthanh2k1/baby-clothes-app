@@ -13,6 +13,7 @@ import {
   IProductRepository,
 } from './interfaces/product-repository.interface';
 import { ProductCategoryService } from '../product-category/product-category.service';
+import { assignFilters } from 'src/common/utils/assign-filters';
 
 @Injectable()
 export class ProductService {
@@ -30,10 +31,10 @@ export class ProductService {
       ...productDto,
     });
 
-    for (let i = 0; i < product_categories.length; i++) {
+    for (const category_id of product_categories) {
       await this.productCategoryService.createProductCategory({
         product_id: newProduct.product_id,
-        category_id: product_categories[i],
+        category_id,
       });
     }
 
@@ -48,19 +49,8 @@ export class ProductService {
       const { page, limit, search, order_by, order_dir, ...rest } =
         getProductsDto;
       const searchBy = ['code', 'name', 'category_name'];
-      const filters = {};
-      const filterArray = Object.entries(rest);
-
-      for (let i = 0; i < filterArray.length; i++) {
-        const [key, value] = filterArray[i];
-
-        if (value === undefined) {
-          continue;
-        }
-
-        filters[key] = value;
-      }
-
+      const filters: Record<string, any> = {};
+      assignFilters(rest, filters);
       const filterData = {
         page,
         limit,
@@ -94,24 +84,21 @@ export class ProductService {
 
   async updateProduct(id: string, updateProductDto: UpdateProductDto) {
     const { product_categories, ...productDto } = updateProductDto;
-    const updatedProduct = await this.productRepository.update(id, productDto);
-
-    if (!updatedProduct) {
-      throw new NotFoundException('Product not found.');
-    }
+    const currentProduct = await this.getProduct(id);
+    const uppdatedProduct = await this.productRepository.update(
+      currentProduct.data,
+      productDto,
+    );
 
     return {
       message: 'Update product successfully.',
-      data: updatedProduct,
+      data: uppdatedProduct,
     };
   }
 
   async deleteProduct(id: string) {
-    const updatedProduct = await this.productRepository.delete(id);
-
-    if (!updatedProduct) {
-      throw new NotFoundException('Product not found.');
-    }
+    const currentProduct = await this.getProduct(id);
+    await this.productRepository.delete(currentProduct.data);
 
     return {
       message: 'Delete product successfully.',

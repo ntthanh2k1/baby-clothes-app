@@ -7,6 +7,7 @@ import {
   ICategoryRepository,
 } from './interfaces/category-repository.interface';
 import { GetCategoriesDto } from './dto/get-categories.dto';
+import { assignFilters } from 'src/common/utils/assign-filters';
 
 @Injectable()
 export class CategoryService {
@@ -32,19 +33,8 @@ export class CategoryService {
     const { page, limit, search, order_by, order_dir, ...rest } =
       getCategoriesDto;
     const searchBy = ['code', 'name'];
-    const filters = {};
-    const filterArray = Object.entries(rest);
-
-    for (let i = 0; i < filterArray.length; i++) {
-      const [key, value] = filterArray[i];
-
-      if (value === undefined) {
-        continue;
-      }
-
-      filters[key] = value;
-    }
-
+    const filters: Record<string, any> = {};
+    assignFilters(rest, filters);
     const filterData = {
       page,
       limit,
@@ -74,14 +64,11 @@ export class CategoryService {
   }
 
   async updateCategory(id: string, updateCategoryDto: UpdateCategoryDto) {
+    const currentCategory = await this.getCategory(id);
     const updatedCategory = await this.categoryRepository.update(
-      id,
+      currentCategory.data,
       updateCategoryDto,
     );
-
-    if (!updatedCategory) {
-      throw new NotFoundException('Category not found.');
-    }
 
     return {
       message: 'Update category successfully.',
@@ -90,11 +77,8 @@ export class CategoryService {
   }
 
   async deleteCategory(id: string) {
-    const updatedCategory = await this.categoryRepository.delete(id);
-
-    if (!updatedCategory) {
-      throw new NotFoundException('Category not found.');
-    }
+    const currentCategory = await this.getCategory(id);
+    await this.categoryRepository.delete(currentCategory.data);
 
     return {
       message: 'Delete category successfully.',

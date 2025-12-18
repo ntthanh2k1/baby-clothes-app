@@ -34,24 +34,6 @@ export class UserRepository
 
   async getUser(condition: Partial<User>): Promise<User | null> {
     const queryBuilder = super.getQueryBuilder();
-
-    queryBuilder.select([
-      'entity.user_id',
-      'entity.code',
-      'entity.name',
-      'entity.username',
-      'entity.image',
-      'entity.phone_number',
-      'entity.email',
-      'entity.citizen_id',
-      'entity.tax_number',
-      'entity.gender',
-      'entity.birth_date',
-      'entity.address',
-      'entity.note',
-      'entity.is_active',
-    ]);
-
     const currentUser = await super.getOneBy(queryBuilder, condition);
 
     return currentUser;

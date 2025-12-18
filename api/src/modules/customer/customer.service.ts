@@ -7,6 +7,7 @@ import {
 } from './interfaces/customer-repository.interface';
 import { createCode } from 'src/common/utils/create-code';
 import { GetCustomersDto } from './dto/get-customers.dto';
+import { assignFilters } from 'src/common/utils/assign-filters';
 
 @Injectable()
 export class CustomerService {
@@ -32,19 +33,8 @@ export class CustomerService {
     const { page, limit, search, order_by, order_dir, ...rest } =
       getCustomersDto;
     const searchBy = ['code', 'name', 'phone_number'];
-    const filters = {};
-    const filterArray = Object.entries(rest);
-
-    for (let i = 0; i < filterArray.length; i++) {
-      const [key, value] = filterArray[i];
-
-      if (value === undefined) {
-        continue;
-      }
-
-      filters[key] = value;
-    }
-
+    const filters: Record<string, any> = {};
+    assignFilters(rest, filters);
     const filterData = {
       page,
       limit,
@@ -74,14 +64,11 @@ export class CustomerService {
   }
 
   async updateCustomer(id: string, updateCustomerDto: UpdateCustomerDto) {
+    const currentCustomer = await this.getCustomer(id);
     const updatedCustomer = await this.customerRepository.update(
-      id,
+      currentCustomer.data,
       updateCustomerDto,
     );
-
-    if (!updatedCustomer) {
-      throw new NotFoundException('Customer not found.');
-    }
 
     return {
       message: 'Update customer successfully.',
@@ -90,11 +77,8 @@ export class CustomerService {
   }
 
   async deleteCustomer(id: string) {
-    const updatedCustomer = await this.customerRepository.delete(id);
-
-    if (!updatedCustomer) {
-      throw new NotFoundException('Customer not found.');
-    }
+    const currentCustomer = await this.getCustomer(id);
+    await this.customerRepository.delete(currentCustomer.data);
 
     return {
       message: 'Delete customer successfully.',

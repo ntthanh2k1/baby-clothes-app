@@ -17,7 +17,7 @@ export interface IBaseRepository<T> {
     condition: Partial<T>,
   ): Promise<T | null>;
 
-  update(id: string, data: Partial<T>): Promise<T | null>;
+  update(existing: T, data: Partial<T>): Promise<T | null>;
 
-  delete(id: string, userId?: string): Promise<boolean>;
+  delete(existing: T, userId?: string): Promise<boolean>;
 }

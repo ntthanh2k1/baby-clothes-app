@@ -28,7 +28,11 @@ export class BaseRepository<T> implements IBaseRepository<T> {
   }
 
   async create(data: Partial<T>): Promise<T> {
-    return await this.repository.save(data as any);
+    // tạo instance của entity
+    // không có dòng này sẽ return kiểu plain object
+    const entity = this.repository.create(data as any);
+
+    return (await this.repository.save(entity)) as any;
   }
 
   async getAll(queryBuilder: SelectQueryBuilder<T>, filterData: IFilterData) {
@@ -75,31 +79,25 @@ export class BaseRepository<T> implements IBaseRepository<T> {
 
     const existing = await queryBuilder.getOne();
 
-    if (!existing) {
-      return null;
-    }
-
     return existing;
   }
 
-  async update(id: string, data: Partial<T>): Promise<T | null> {
-    const existing = await this.getOneBy(this.getQueryBuilder(), {
-      [this.primaryKey]: id,
-    } as any);
+  async update(existing: T, data: Partial<T>): Promise<T | null> {
+    // tạo instance của entity
+    // không có dòng này sẽ return kiểu plain object
+    const entity = this.repository.merge(existing, data as any);
 
-    return await this.repository.save({ ...existing, ...data } as any);
+    return await this.repository.save(entity);
   }
 
-  async delete(id: string, userId?: string): Promise<boolean> {
-    const result = await this.repository.update(
-      { [this.primaryKey]: id } as any,
-      {
-        is_deleted: true,
-        updated_by: userId,
-      } as any,
-    );
+  async delete(existing: T, userId?: string): Promise<boolean> {
+    await this.repository.save({
+      ...existing,
+      is_deleted: true,
+      updated_by: userId,
+    } as any);
 
-    return result.affected > 0;
+    return true;
   }
 
   protected applySearching(
@@ -110,8 +108,7 @@ export class BaseRepository<T> implements IBaseRepository<T> {
     if (search && searchBy?.length) {
       queryBuilder.andWhere(
         new Brackets((qb) => {
-          for (let i = 0; i < searchBy.length; i++) {
-            const col = searchBy[i];
+          for (const col of searchBy) {
             const colStr = col.includes('.') ? col : `${this.entity}.${col}`;
 
             qb.orWhere(`${colStr} ILIKE :search`);
@@ -133,19 +130,15 @@ export class BaseRepository<T> implements IBaseRepository<T> {
     if (filters) {
       const entries = Object.entries(filters);
 
-      for (let i = 0; i < entries.length; i++) {
-        const [key, value] = entries[i];
+      for (const [key, value] of entries) {
+        if (value !== undefined) {
+          const colStr = key.includes('.') ? key : `${this.entity}.${key}`;
+          const paramKey = key.replace(/\./g, '_');
 
-        if (value === undefined) {
-          continue;
+          queryBuilder.andWhere(`${colStr} = :${paramKey}`, {
+            [paramKey]: value,
+          });
         }
-
-        const colStr = key.includes('.') ? key : `${this.entity}.${key}`;
-        const paramKey = key.replace(/\./g, '_');
-
-        queryBuilder.andWhere(`${colStr} = :${paramKey}`, {
-          [paramKey]: value,
-        });
       }
     }
 
