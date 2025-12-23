@@ -49,23 +49,17 @@ export class Category {
   @Column({ type: 'varchar', length: 256, nullable: true })
   updated_by: string;
 
-  @OneToMany(() => Category, (category) => category.parent, {
-    createForeignKeyConstraints: false,
-  })
+  @OneToMany(() => Category, (category) => category.parent)
   categories: Category[];
 
   @OneToMany(
     () => ProductCategory,
     (productCategory) => productCategory.category,
-    {
-      createForeignKeyConstraints: false,
-    },
   )
   product_categories: ProductCategory[];
 
   @ManyToOne(() => Category, (parent) => parent.categories, {
     nullable: true,
-    createForeignKeyConstraints: false,
   })
   @JoinColumn({ name: 'parent_id' })
   parent: Category;

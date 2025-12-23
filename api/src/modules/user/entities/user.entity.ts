@@ -1,8 +1,10 @@
 import { Exclude } from 'class-transformer';
+import { Order } from 'src/modules/order/entities/order.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -69,4 +71,7 @@ export class User {
 
   @Column({ type: 'varchar', length: 256, nullable: true })
   updated_by: string;
+
+  @OneToMany(() => Order, (order) => order.user)
+  orders: Order[];
 }

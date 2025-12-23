@@ -1,7 +1,9 @@
+import { Order } from 'src/modules/order/entities/order.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -49,4 +51,7 @@ export class Customer {
 
   @Column({ type: 'varchar', length: 256, nullable: true })
   updated_by: string;
+
+  @OneToMany(() => Order, (order) => order.customer)
+  orders: Order[];
 }

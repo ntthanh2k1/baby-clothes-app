@@ -1,30 +1,21 @@
+import { Order } from 'src/modules/order/entities/order.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  PrimaryGeneratedColumn,
+  JoinColumn,
+  OneToOne,
+  PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity('sales_order')
 export class SalesOrder {
-  @PrimaryGeneratedColumn('uuid')
-  sales_order_id: string;
-
-  @Column({ type: 'uuid', nullable: true })
-  user_id: string;
-
-  @Column({ type: 'uuid', nullable: true })
-  customer_id: string;
-
-  @Column({ type: 'varchar', length: 32, nullable: true })
-  code: string;
-
-  @CreateDateColumn()
-  order_date: Date;
+  @PrimaryColumn('uuid')
+  order_id: string;
 
   @Column({ type: 'varchar', nullable: true })
-  note: string;
+  shipping_address: string;
 
   @Column({ default: false })
   is_deleted: boolean;
@@ -40,4 +31,10 @@ export class SalesOrder {
 
   @Column({ type: 'varchar', length: 256, nullable: true })
   updated_by: string;
+
+  @OneToOne(() => Order, (order) => order.sales_order, {
+    nullable: true,
+  })
+  @JoinColumn({ name: 'order_id' })
+  order: Order;
 }

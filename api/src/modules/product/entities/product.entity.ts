@@ -1,3 +1,4 @@
+import { OrderProduct } from 'src/modules/order-product/entities/order-product.entity';
 import { ProductCategory } from 'src/modules/product-category/entities/product-category.entity';
 import {
   Column,
@@ -52,9 +53,9 @@ export class Product {
   @OneToMany(
     () => ProductCategory,
     (productCategory) => productCategory.product,
-    {
-      createForeignKeyConstraints: false,
-    },
   )
   product_categories: ProductCategory[];
+
+  @OneToMany(() => OrderProduct, (orderProduct) => orderProduct.product)
+  order_products: OrderProduct[];
 }
