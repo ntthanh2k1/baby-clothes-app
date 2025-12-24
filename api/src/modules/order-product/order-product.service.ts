@@ -1,26 +1,42 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateOrderProductDto } from './dto/create-order-product.dto';
 import { UpdateOrderProductDto } from './dto/update-order-product.dto';
+import {
+  IOrderProductRepo,
+  IOrderProductRepository,
+} from './interfaces/order-product-repository.interface';
 
 @Injectable()
 export class OrderProductService {
-  create(createOrderProductDto: CreateOrderProductDto) {
-    return 'This action adds a new orderProduct';
+  constructor(
+    @Inject(IOrderProductRepo)
+    private readonly orderProductRepository: IOrderProductRepository,
+  ) {}
+
+  async createOrderProduct(createOrderProductDto: CreateOrderProductDto) {
+    const newOrderProduct = await this.orderProductRepository.create(
+      createOrderProductDto,
+    );
+
+    return {
+      message: 'Create order-product successfully.',
+      data: newOrderProduct,
+    };
   }
 
-  findAll() {
-    return `This action returns all orderProduct`;
-  }
+  // findAll() {
+  //   return `This action returns all orderProduct`;
+  // }
 
-  findOne(id: number) {
-    return `This action returns a #${id} orderProduct`;
-  }
+  // findOne(id: number) {
+  //   return `This action returns a #${id} orderProduct`;
+  // }
 
-  update(id: number, updateOrderProductDto: UpdateOrderProductDto) {
-    return `This action updates a #${id} orderProduct`;
-  }
+  // update(id: number, updateOrderProductDto: UpdateOrderProductDto) {
+  //   return `This action updates a #${id} orderProduct`;
+  // }
 
-  remove(id: number) {
-    return `This action removes a #${id} orderProduct`;
-  }
+  // remove(id: number) {
+  //   return `This action removes a #${id} orderProduct`;
+  // }
 }

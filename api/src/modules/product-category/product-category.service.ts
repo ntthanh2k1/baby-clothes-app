@@ -26,19 +26,19 @@ export class ProductCategoryService {
     };
   }
 
-  findAll() {
-    return `This action returns all productCategory`;
-  }
+  // findAll() {
+  //   return `This action returns all productCategory`;
+  // }
 
-  findOne(id: number) {
-    return `This action returns a #${id} productCategory`;
-  }
+  // findOne(id: number) {
+  //   return `This action returns a #${id} productCategory`;
+  // }
 
-  update(id: number, updateProductCategoryDto: UpdateProductCategoryDto) {
-    return `This action updates a #${id} productCategory`;
-  }
+  // update(id: number, updateProductCategoryDto: UpdateProductCategoryDto) {
+  //   return `This action updates a #${id} productCategory`;
+  // }
 
-  remove(id: number) {
-    return `This action removes a #${id} productCategory`;
-  }
+  // remove(id: number) {
+  //   return `This action removes a #${id} productCategory`;
+  // }
 }
