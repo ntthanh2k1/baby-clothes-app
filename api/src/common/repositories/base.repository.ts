@@ -27,10 +27,10 @@ export class BaseRepository<T> implements IBaseRepository<T> {
     return queryBuilder;
   }
 
-  async create(data: Partial<T>): Promise<T> {
+  async create(dto: Partial<T>): Promise<T> {
     // tạo instance của entity
     // không có dòng này sẽ return kiểu plain object
-    const entity = this.repository.create(data as any);
+    const entity = this.repository.create(dto as any);
 
     return (await this.repository.save(entity)) as any;
   }
@@ -82,10 +82,10 @@ export class BaseRepository<T> implements IBaseRepository<T> {
     return existing;
   }
 
-  async update(existing: T, data: Partial<T>): Promise<T | null> {
+  async update(existing: T, dto: Partial<T>): Promise<T | null> {
     // tạo instance của entity
     // không có dòng này sẽ return kiểu plain object
-    const entity = this.repository.merge(existing, data as any);
+    const entity = this.repository.merge(existing, dto as any);
 
     return await this.repository.save(entity);
   }

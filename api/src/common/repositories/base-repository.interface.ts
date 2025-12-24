@@ -5,7 +5,7 @@ import { IPaginateData } from '../interfaces/paginate-data.interface';
 export interface IBaseRepository<T> {
   getQueryBuilder(): SelectQueryBuilder<T>;
 
-  create(data: Partial<T>): Promise<T>;
+  create(dto: Partial<T>): Promise<T>;
 
   getAll(
     queryBuilder: SelectQueryBuilder<T>,
@@ -17,7 +17,7 @@ export interface IBaseRepository<T> {
     condition: Partial<T>,
   ): Promise<T | null>;
 
-  update(existing: T, data: Partial<T>): Promise<T | null>;
+  update(existing: T, dto: Partial<T>): Promise<T | null>;
 
   delete(existing: T, userId?: string): Promise<boolean>;
 }

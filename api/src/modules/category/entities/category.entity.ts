@@ -25,7 +25,11 @@ export class Category {
   @Column({ type: 'varchar', length: 256, nullable: true })
   name: string;
 
-  @Column({ type: 'varchar', length: 32, nullable: true })
+  @Column({
+    type: 'varchar',
+    enum: CategoryType,
+    default: CategoryType.item_category,
+  })
   type: CategoryType;
 
   @Column({ type: 'varchar', nullable: true })

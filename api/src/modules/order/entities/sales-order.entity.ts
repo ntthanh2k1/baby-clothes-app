@@ -14,9 +14,6 @@ export class SalesOrder {
   @PrimaryColumn('uuid')
   order_id: string;
 
-  @Column({ type: 'varchar', nullable: true })
-  shipping_address: string;
-
   @Column({ default: false })
   is_deleted: boolean;
 

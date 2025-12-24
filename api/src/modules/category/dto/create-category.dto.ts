@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsOptional } from 'class-validator';
 import { CategoryType } from '../enums/category-type.enum';
 
 export class CreateCategoryDto {
@@ -6,6 +6,7 @@ export class CreateCategoryDto {
   name: string;
 
   @IsNotEmpty()
+  @IsEnum(CategoryType)
   type: CategoryType;
 
   @IsOptional()

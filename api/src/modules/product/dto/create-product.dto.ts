@@ -17,5 +17,5 @@ export class CreateProductDto {
   note?: string;
 
   @IsOptional()
-  product_categories?: string[];
+  category_ids?: string[];
 }

@@ -24,14 +24,14 @@ export class ProductService {
   ) {}
 
   async createProduct(createProductDto: CreateProductDto) {
-    const { product_categories, ...productDto } = createProductDto;
+    const { category_ids, ...productDto } = createProductDto;
     const code = createCode('PT');
     const newProduct = await this.productRepository.create({
       code,
       ...productDto,
     });
 
-    for (const category_id of product_categories) {
+    for (const category_id of category_ids) {
       await this.productCategoryService.createProductCategory({
         product_id: newProduct.product_id,
         category_id,
@@ -83,7 +83,7 @@ export class ProductService {
   }
 
   async updateProduct(id: string, updateProductDto: UpdateProductDto) {
-    const { product_categories, ...productDto } = updateProductDto;
+    const { category_ids, ...productDto } = updateProductDto;
     const currentProduct = await this.getProduct(id);
     const uppdatedProduct = await this.productRepository.update(
       currentProduct.data,

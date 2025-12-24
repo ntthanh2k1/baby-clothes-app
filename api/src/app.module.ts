@@ -8,7 +8,6 @@ import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ProductModule } from './modules/product/product.module';
 import { CustomerModule } from './modules/customer/customer.module';
-import { SalesOrderModule } from './modules/sales-order/sales-order.module';
 import { CategoryModule } from './modules/category/category.module';
 import { ProductCategoryModule } from './modules/product-category/product-category.module';
 import { OrderModule } from './modules/order/order.module';
@@ -26,7 +25,6 @@ import { OrderProductModule } from './modules/order-product/order-product.module
     AuthModule,
     ProductModule,
     CustomerModule,
-    SalesOrderModule,
     CategoryModule,
     ProductCategoryModule,
     OrderModule,
