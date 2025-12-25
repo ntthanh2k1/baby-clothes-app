@@ -27,6 +27,9 @@ export class OrderProduct {
   quantity: number;
 
   @Column({ type: 'int', default: 0 })
+  cost: number;
+
+  @Column({ type: 'int', default: 0 })
   price: number;
 
   @Column({ default: false })

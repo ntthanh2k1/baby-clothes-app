@@ -28,7 +28,7 @@ export class Category {
   @Column({
     type: 'varchar',
     enum: CategoryType,
-    default: CategoryType.item_category,
+    default: CategoryType.ITEM,
   })
   type: CategoryType;
 

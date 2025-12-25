@@ -4,19 +4,24 @@ import { OrderController } from './order.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Order } from './entities/order.entity';
 import { User } from '../user/entities/user.entity';
-import { ISalesOrderRepo } from './interfaces/sales-order-repository.interface';
-import { SalesOrderRepository } from './repositories/sales-order.repository';
-import { SalesOrder } from './entities/sales-order.entity';
+import { ORDER_REPOSITORY } from './interfaces/order-repository.interface';
+import { OrderRepository } from './repositories/order.repository';
+import { OrderProductModule } from '../order-product/order-product.module';
+import { ORDER_STRATEGY } from './interfaces/order-strategy.interface';
+import { SalesOrderStrategy } from './strategies/sales-order.strategy';
+import { RentalOrderStrategy } from './strategies/rental-order.strategy';
+import { OrderStrategy } from './strategies/order.strategy';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Order, SalesOrder, User])],
+  imports: [TypeOrmModule.forFeature([Order, User]), OrderProductModule],
   controllers: [OrderController],
   providers: [
     OrderService,
     {
-      provide: ISalesOrderRepo,
-      useClass: SalesOrderRepository,
+      provide: ORDER_REPOSITORY,
+      useClass: OrderRepository,
     },
+    OrderStrategy,
   ],
 })
 export class OrderModule {}

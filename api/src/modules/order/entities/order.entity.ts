@@ -1,6 +1,5 @@
 import { Customer } from 'src/modules/customer/entities/customer.entity';
 import { OrderProduct } from 'src/modules/order-product/entities/order-product.entity';
-import { SalesOrder } from 'src/modules/order/entities/sales-order.entity';
 import { User } from 'src/modules/user/entities/user.entity';
 import {
   Column,
@@ -9,7 +8,6 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -32,8 +30,14 @@ export class Order {
   @CreateDateColumn()
   order_date: Date;
 
-  @Column({ type: 'enum', enum: OrderType, default: OrderType.sale })
+  @Column({ type: 'enum', enum: OrderType, default: OrderType.SALE })
   type: OrderType;
+
+  @Column({ type: 'int', default: 0 })
+  total_cost: number;
+
+  @Column({ type: 'int', default: 0 })
+  total_amount: number;
 
   @Column({ type: 'varchar', nullable: true })
   shipping_from_address: string;
@@ -58,11 +62,6 @@ export class Order {
 
   @Column({ type: 'varchar', length: 256, nullable: true })
   updated_by: string;
-
-  @OneToOne(() => SalesOrder, (salesOrder) => salesOrder.order, {
-    nullable: true,
-  })
-  sales_order?: SalesOrder;
 
   @OneToMany(() => OrderProduct, (orderProduct) => orderProduct.order)
   order_products: OrderProduct[];

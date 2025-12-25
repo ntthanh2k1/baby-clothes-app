@@ -50,7 +50,9 @@ export class ProductService {
         getProductsDto;
       const searchBy = ['code', 'name', 'category_name'];
       const filters: Record<string, any> = {};
+
       assignFilters(rest, filters);
+
       const filterData = {
         page,
         limit,

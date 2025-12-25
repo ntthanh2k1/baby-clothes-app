@@ -34,7 +34,9 @@ export class CategoryService {
       getCategoriesDto;
     const searchBy = ['code', 'name'];
     const filters: Record<string, any> = {};
+
     assignFilters(rest, filters);
+
     const filterData = {
       page,
       limit,

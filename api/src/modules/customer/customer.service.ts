@@ -34,7 +34,9 @@ export class CustomerService {
       getCustomersDto;
     const searchBy = ['code', 'name', 'phone_number'];
     const filters: Record<string, any> = {};
+
     assignFilters(rest, filters);
+
     const filterData = {
       page,
       limit,

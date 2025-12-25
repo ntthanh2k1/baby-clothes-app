@@ -1,4 +1,4 @@
 export enum OrderType {
-  sale = 'SALE',
-  rental = 'RENTAL',
+  SALE = 'SALE',
+  RENTAL = 'RENTAL',
 }

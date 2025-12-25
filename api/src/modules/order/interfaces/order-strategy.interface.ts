@@ -1,5 +1,5 @@
-import { CreateOrderDto } from '../dto/create-order.dto';
-
 export interface IOrderStrategy {
-  calculateTotalAmount(dto: CreateOrderDto): number;
+  calculateTotalAmount(dto: any): number;
 }
+
+export const ORDER_STRATEGY = Symbol('IOrderStrategy');

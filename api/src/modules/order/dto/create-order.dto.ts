@@ -1,7 +1,5 @@
 import { IsEnum, IsNotEmpty, IsOptional } from 'class-validator';
 import { OrderType } from '../enums/order-type.enum';
-import { CreateSalesOrderDto } from 'src/modules/order/dto/create-sales-order.dto';
-import { CreateOrderProductDto } from 'src/modules/order-product/dto/create-order-product.dto';
 
 export class CreateOrderDto {
   @IsNotEmpty()
@@ -24,8 +22,10 @@ export class CreateOrderDto {
   note?: string;
 
   @IsOptional()
-  sales_order?: CreateSalesOrderDto;
-
-  @IsOptional()
-  order_products?: CreateOrderProductDto[];
+  order_products?: {
+    product_id: string;
+    quantity: number;
+    cost?: number;
+    price: number;
+  }[];
 }

@@ -46,7 +46,9 @@ export class UserService {
     const { page, limit, search, order_by, order_dir, ...rest } = getUsersDto;
     const searchBy = ['code', 'name', 'username', 'phone_number'];
     const filters: Record<string, any> = {};
+
     assignFilters(rest, filters);
+
     const filterData = {
       page,
       limit,
