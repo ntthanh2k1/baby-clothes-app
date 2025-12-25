@@ -1,29 +1,29 @@
 import {
+  Inject,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '../user/entities/user.entity';
-import { Repository } from 'typeorm';
 import { LoginDto } from './dto/login.dto';
 import { verifyPassword } from 'src/common/utils/create-password';
 import { TokenService } from './token.service';
+import {
+  IUserRepository,
+  USER_REPOSITORY,
+} from '../user/interfaces/user-repository.interface';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @Inject(USER_REPOSITORY) private readonly userRepository: IUserRepository,
     private readonly tokenService: TokenService,
   ) {}
 
   async login(loginDto: LoginDto) {
     try {
       const { username, password } = loginDto;
-      const currentUser = await this.userRepository.findOne({
-        where: { username, is_active: true, is_deleted: false },
-      });
+      const currentUser = await this.userRepository.getUser({ username });
 
       if (!currentUser) {
         throw new NotFoundException('User not found');

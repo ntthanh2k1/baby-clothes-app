@@ -4,4 +4,4 @@ import { OrderProduct } from '../entities/order-product.entity';
 export interface IOrderProductRepository
   extends IBaseRepository<OrderProduct> {}
 
-export const IOrderProductRepo = Symbol('IOrderProductRepository');
+export const ORDER_PRODUCT_REPOSITORY = Symbol('IOrderProductRepository');

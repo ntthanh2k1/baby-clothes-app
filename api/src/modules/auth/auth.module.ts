@@ -6,6 +6,7 @@ import { User } from '../user/entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TokenService } from './token.service';
+import { UserModule } from '../user/user.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { TokenService } from './token.service';
         signOptions: { expiresIn: `${configService.get('ACCESS_TOKEN_TTL')}s` },
       }),
     }),
+    UserModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, TokenService],

@@ -9,7 +9,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { createCode } from 'src/common/utils/create-code';
 import { GetProductsDto } from './dto/get-products.dto';
 import {
-  IProductRepo,
+  PRODUCT_REPOSITORY,
   IProductRepository,
 } from './interfaces/product-repository.interface';
 import { ProductCategoryService } from '../product-category/product-category.service';
@@ -18,7 +18,7 @@ import { assignFilters } from 'src/common/utils/assign-filters';
 @Injectable()
 export class ProductService {
   constructor(
-    @Inject(IProductRepo)
+    @Inject(PRODUCT_REPOSITORY)
     private readonly productRepository: IProductRepository,
     private readonly productCategoryService: ProductCategoryService,
   ) {}

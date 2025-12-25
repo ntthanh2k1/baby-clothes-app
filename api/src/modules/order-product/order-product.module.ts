@@ -3,7 +3,7 @@ import { OrderProductService } from './order-product.service';
 import { OrderProductController } from './order-product.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrderProduct } from './entities/order-product.entity';
-import { IOrderProductRepo } from './interfaces/order-product-repository.interface';
+import { ORDER_PRODUCT_REPOSITORY } from './interfaces/order-product-repository.interface';
 import { OrderProductRepository } from './repositories/order-product.repository';
 
 @Module({
@@ -12,7 +12,7 @@ import { OrderProductRepository } from './repositories/order-product.repository'
   providers: [
     OrderProductService,
     {
-      provide: IOrderProductRepo,
+      provide: ORDER_PRODUCT_REPOSITORY,
       useClass: OrderProductRepository,
     },
   ],

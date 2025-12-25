@@ -2,14 +2,14 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CreateOrderProductDto } from './dto/create-order-product.dto';
 import { UpdateOrderProductDto } from './dto/update-order-product.dto';
 import {
-  IOrderProductRepo,
+  ORDER_PRODUCT_REPOSITORY,
   IOrderProductRepository,
 } from './interfaces/order-product-repository.interface';
 
 @Injectable()
 export class OrderProductService {
   constructor(
-    @Inject(IOrderProductRepo)
+    @Inject(ORDER_PRODUCT_REPOSITORY)
     private readonly orderProductRepository: IOrderProductRepository,
   ) {}
 

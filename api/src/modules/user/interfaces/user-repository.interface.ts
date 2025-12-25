@@ -9,4 +9,4 @@ export interface IUserRepository extends IBaseRepository<User> {
   getUser(condition: Partial<User>): Promise<User | null>;
 }
 
-export const IUserRepo = Symbol('IUserRepository');
+export const USER_REPOSITORY = Symbol('IUserRepository');

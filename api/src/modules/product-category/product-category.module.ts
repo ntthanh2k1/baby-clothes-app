@@ -3,7 +3,7 @@ import { ProductCategoryService } from './product-category.service';
 import { ProductCategoryController } from './product-category.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductCategory } from './entities/product-category.entity';
-import { IProductCategoryRepo } from './interfaces/product-category-repository.interface';
+import { PRODUCT_CATEGORY_REPOSITORY } from './interfaces/product-category-repository.interface';
 import { ProductCategoryRepository } from './repositories/product-category.repository';
 
 @Module({
@@ -12,7 +12,7 @@ import { ProductCategoryRepository } from './repositories/product-category.repos
   providers: [
     ProductCategoryService,
     {
-      provide: IProductCategoryRepo,
+      provide: PRODUCT_CATEGORY_REPOSITORY,
       useClass: ProductCategoryRepository,
     },
   ],

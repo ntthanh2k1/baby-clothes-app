@@ -3,7 +3,7 @@ import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { IUserRepo } from './interfaces/user-repository.interface';
+import { USER_REPOSITORY } from './interfaces/user-repository.interface';
 import { UserRepository } from './repositories/user.repository';
 
 @Module({
@@ -12,9 +12,10 @@ import { UserRepository } from './repositories/user.repository';
   providers: [
     UserService,
     {
-      provide: IUserRepo,
+      provide: USER_REPOSITORY,
       useClass: UserRepository,
     },
   ],
+  exports: [UserService, USER_REPOSITORY],
 })
 export class UserModule {}

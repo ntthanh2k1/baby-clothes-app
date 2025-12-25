@@ -9,4 +9,4 @@ export interface ICategoryRepository extends IBaseRepository<Category> {
   getCategory(condition: Partial<Category>): Promise<Category | null>;
 }
 
-export const ICategoryRepo = Symbol('ICategoryRepository');
+export const CATEGORY_REPOSITORY = Symbol('ICategoryRepository');

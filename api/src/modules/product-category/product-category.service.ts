@@ -2,14 +2,14 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CreateProductCategoryDto } from './dto/create-product-category.dto';
 import { UpdateProductCategoryDto } from './dto/update-product-category.dto';
 import {
-  IProductCategoryRepo,
+  PRODUCT_CATEGORY_REPOSITORY,
   IProductCategoryRepository,
 } from './interfaces/product-category-repository.interface';
 
 @Injectable()
 export class ProductCategoryService {
   constructor(
-    @Inject(IProductCategoryRepo)
+    @Inject(PRODUCT_CATEGORY_REPOSITORY)
     private readonly productCategoryRepository: IProductCategoryRepository,
   ) {}
 

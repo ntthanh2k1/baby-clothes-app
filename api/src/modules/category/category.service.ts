@@ -3,7 +3,7 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { createCode } from 'src/common/utils/create-code';
 import {
-  ICategoryRepo,
+  CATEGORY_REPOSITORY,
   ICategoryRepository,
 } from './interfaces/category-repository.interface';
 import { GetCategoriesDto } from './dto/get-categories.dto';
@@ -12,7 +12,7 @@ import { assignFilters } from 'src/common/utils/assign-filters';
 @Injectable()
 export class CategoryService {
   constructor(
-    @Inject(ICategoryRepo)
+    @Inject(CATEGORY_REPOSITORY)
     private readonly categoryRepository: ICategoryRepository,
   ) {}
 

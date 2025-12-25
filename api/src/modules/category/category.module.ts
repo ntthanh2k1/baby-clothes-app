@@ -4,7 +4,7 @@ import { CategoryController } from './category.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Category } from './entities/category.entity';
 import { User } from '../user/entities/user.entity';
-import { ICategoryRepo } from './interfaces/category-repository.interface';
+import { CATEGORY_REPOSITORY } from './interfaces/category-repository.interface';
 import { CategoryRepository } from './repositories/category.repository';
 
 @Module({
@@ -13,7 +13,7 @@ import { CategoryRepository } from './repositories/category.repository';
   providers: [
     CategoryService,
     {
-      provide: ICategoryRepo,
+      provide: CATEGORY_REPOSITORY,
       useClass: CategoryRepository,
     },
   ],

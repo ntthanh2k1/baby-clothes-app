@@ -9,4 +9,4 @@ export interface ICustomerRepository extends IBaseRepository<Customer> {
   getCustomer(condition: Partial<Customer>): Promise<Customer | null>;
 }
 
-export const ICustomerRepo = Symbol('ICustomerRepository');
+export const CUSTOMER_REPOSITORY = Symbol('ICustomerRepository');

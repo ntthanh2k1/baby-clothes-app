@@ -9,4 +9,4 @@ export interface IProductRepository extends IBaseRepository<Product> {
   getProduct(condition: Partial<Product>): Promise<Product | null>;
 }
 
-export const IProductRepo = Symbol('IProductRepository');
+export const PRODUCT_REPOSITORY = Symbol('IProductRepository');

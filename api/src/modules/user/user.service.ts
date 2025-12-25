@@ -10,7 +10,7 @@ import { createCode } from 'src/common/utils/create-code';
 import { hashPassword } from 'src/common/utils/create-password';
 import { GetUsersDto } from './dto/get-users.dto';
 import {
-  IUserRepo,
+  USER_REPOSITORY,
   IUserRepository,
 } from './interfaces/user-repository.interface';
 import { assignFilters } from 'src/common/utils/assign-filters';
@@ -18,7 +18,7 @@ import { assignFilters } from 'src/common/utils/assign-filters';
 @Injectable()
 export class UserService {
   constructor(
-    @Inject(IUserRepo) private readonly userRepository: IUserRepository,
+    @Inject(USER_REPOSITORY) private readonly userRepository: IUserRepository,
   ) {}
   async createUser(createUserDto: CreateUserDto) {
     const { username } = createUserDto;

@@ -2,7 +2,7 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 import {
-  ICustomerRepo,
+  CUSTOMER_REPOSITORY,
   ICustomerRepository,
 } from './interfaces/customer-repository.interface';
 import { createCode } from 'src/common/utils/create-code';
@@ -12,7 +12,7 @@ import { assignFilters } from 'src/common/utils/assign-filters';
 @Injectable()
 export class CustomerService {
   constructor(
-    @Inject(ICustomerRepo)
+    @Inject(CUSTOMER_REPOSITORY)
     private readonly customerRepository: ICustomerRepository,
   ) {}
 

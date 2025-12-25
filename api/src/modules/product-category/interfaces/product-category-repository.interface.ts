@@ -4,4 +4,4 @@ import { ProductCategory } from '../entities/product-category.entity';
 export interface IProductCategoryRepository
   extends IBaseRepository<ProductCategory> {}
 
-export const IProductCategoryRepo = Symbol('IProductCategoryRepository');
+export const PRODUCT_CATEGORY_REPOSITORY = Symbol('IProductCategoryRepository');
