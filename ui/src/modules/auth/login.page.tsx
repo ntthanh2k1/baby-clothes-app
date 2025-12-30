@@ -24,7 +24,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="font-bold text-3xl mt-5">Đăng nhập</div>
+      <div className="mt-5 text-3xl font-bold">Đăng nhập</div>
       <div className="flex w-auto p-5 m-5 border">
         <form className="w-sm" onSubmit={handleLogin}>
           <div className="my-2">
