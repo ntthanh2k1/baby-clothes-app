@@ -4,13 +4,13 @@ import Sidebar from "./sidebar";
 
 const MainLayout = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="h-screen flex flex-col">
       <Header />
 
       <div className="flex flex-1">
         <Sidebar />
 
-        <div className="flex flex-col">
+        <div className="w-full flex flex-col gap-5 m-5">
           <Outlet />
         </div>
       </div>

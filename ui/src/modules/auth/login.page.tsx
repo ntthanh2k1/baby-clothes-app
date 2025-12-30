@@ -33,7 +33,7 @@ const Login = () => {
               required
               type="text"
               name="username"
-              className="w-full p-2 border"
+              className="w-full p-1 border"
               value={loginForm.username}
               onChange={handleChange}
             />
@@ -45,7 +45,7 @@ const Login = () => {
               required
               type="password"
               name="password"
-              className="w-full p-2 border"
+              className="w-full p-1 border"
               value={loginForm.password}
               onChange={handleChange}
             />
