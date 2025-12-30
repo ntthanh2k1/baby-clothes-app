@@ -4,12 +4,16 @@ import Sidebar from "./sidebar";
 
 const MainLayout = () => {
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Header />
 
-      <Sidebar />
+      <div className="flex flex-1">
+        <Sidebar />
 
-      <Outlet />
+        <div className="flex flex-col">
+          <Outlet />
+        </div>
+      </div>
     </div>
   );
 };
