@@ -1,13 +1,22 @@
+import { Select } from "@headlessui/react";
+import {
+  MdOutlineArrowBackIos,
+  MdOutlineArrowForwardIos,
+  MdOutlineSearch,
+} from "react-icons/md";
+
 const User = () => {
   return (
     <>
       <div className="flex justify-between">
         <div className="flex gap-2">
           <input type="text" className="p-1 border" placeholder="Tìm kiếm" />
-          <button className="p-1 border">Tìm kiếm</button>
+          <button className="px-3 py-1 border cursor-pointer">
+            <MdOutlineSearch />
+          </button>
         </div>
 
-        <button className="p-1 border">Tạo mới</button>
+        <button className="p-1 border cursor-pointer">Tạo mới</button>
       </div>
 
       <table className="border">
@@ -39,6 +48,31 @@ const User = () => {
           </tr>
         </tbody>
       </table>
+
+      <div className="flex gap-2">
+        <button className="px-4 py-1 border cursor-pointer">
+          <MdOutlineArrowBackIos />
+        </button>
+        <button className="px-4 py-1 border cursor-pointer">1</button>
+        <button className="px-4 py-1 border cursor-pointer">2</button>
+        <button className="px-4 py-1 border cursor-pointer">3</button>
+        <div className="p-1">...</div>
+        <button className="px-4 py-1 border cursor-pointer">100</button>
+        <button className="px-4 py-1 border cursor-pointer">
+          <MdOutlineArrowForwardIos />
+        </button>
+
+        <Select
+          name="page-size"
+          className="px-2 border cursor-pointer"
+          aria-label="page-size"
+        >
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </Select>
+      </div>
     </>
   );
 };

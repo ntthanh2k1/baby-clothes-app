@@ -13,7 +13,7 @@ const Header = () => {
 
         <Menu as="div" className="w-10 h-10">
           <MenuButton className="w-full h-full border rounded-full cursor-pointer"></MenuButton>
-          <MenuItems className="w-56 absolute right-5 z-10 mt-2 border rounded-md">
+          <MenuItems className="w-56 absolute right-5 z-10 mt-2 border">
             <div className="flex flex-col py-1">
               <MenuItem>
                 <div className="px-4 py-2 text-sm">Tài khoản</div>
