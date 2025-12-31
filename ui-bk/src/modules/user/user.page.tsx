@@ -4,6 +4,7 @@ import {
   MdOutlineArrowForwardIos,
   MdOutlineSearch,
 } from "react-icons/md";
+import { Link } from "react-router";
 
 const User = () => {
   return (
@@ -16,7 +17,9 @@ const User = () => {
           </button>
         </div>
 
-        <button className="p-1 border cursor-pointer">Tạo mới</button>
+        <Link to="/users/create" className="p-1 border cursor-pointer">
+          Tạo mới
+        </Link>
       </div>
 
       <table className="border">
@@ -25,8 +28,8 @@ const User = () => {
             <th className="border">Code</th>
             <th className="border">Name</th>
             <th className="border">Username</th>
-            <th className="border">Phone number</th>
             <th className="border">Image</th>
+            <th className="border">Phone number</th>
             <th className="border">Is active</th>
             <th className="border">Thao tác</th>
           </tr>
@@ -36,8 +39,8 @@ const User = () => {
             <td className="p-1 border">Code</td>
             <td className="p-1 border">Name</td>
             <td className="p-1 border">Username</td>
-            <td className="p-1 border">Phone number</td>
             <td className="p-1 border">Image</td>
+            <td className="p-1 border">Phone number</td>
             <td className="p-1 border">Is active</td>
             <td className="p-1 border">
               <div className="flex gap-2">
