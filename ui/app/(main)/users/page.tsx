@@ -44,7 +44,7 @@ const UserListPage = () => {
         </div>
 
         <Button variant="outline" asChild>
-          <Link href="/users/create" className="cursor-pointer">
+          <Link href="/users/create-user" className="cursor-pointer">
             Tạo mới
             <Plus />
           </Link>

@@ -1,11 +1,9 @@
-import { use } from "react";
-
-const UserDetailPage = ({
+const UserDetailPage = async ({
   params,
 }: {
   params: Promise<{ userId: string }>;
 }) => {
-  const { userId } = use(params);
+  const { userId } = await params;
 
   return <div>User ID: {userId}</div>;
 };
