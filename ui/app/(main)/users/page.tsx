@@ -32,7 +32,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-const User = () => {
+const UserListPage = () => {
   return (
     <>
       <div className="flex justify-between">
@@ -77,7 +77,7 @@ const User = () => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
                     <DropdownMenuItem asChild className="cursor-pointer">
-                      <Link href="users/details">Chi tiết</Link>
+                      <Link href={`/users/1`}>Chi tiết</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild className="cursor-pointer">
                       <Link href="users/delete">Xóa</Link>
@@ -120,4 +120,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default UserListPage;

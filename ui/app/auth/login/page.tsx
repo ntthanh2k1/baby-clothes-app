@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { redirect } from "next/navigation";
 import { useState } from "react";
 
-const Login = () => {
+const LoginPage = () => {
   const [loginForm, setLoginForm] = useState({
     username: "",
     password: "",
@@ -65,4 +65,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;
