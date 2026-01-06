@@ -1,4 +1,10 @@
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -15,7 +21,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ChevronLeft, ChevronRight, Search } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+  MoreHorizontalIcon,
+  Plus,
+  Search,
+} from "lucide-react";
 import Link from "next/link";
 
 const User = () => {
@@ -32,56 +46,45 @@ const User = () => {
         <Button variant="outline" asChild>
           <Link href="/users/create" className="cursor-pointer">
             Tạo mới
+            <Plus />
           </Link>
         </Button>
       </div>
 
-      {/* <table className="border">
-        <thead className="border">
-          <tr>
-            <th className="border">Code</th>
-            <th className="border">Name</th>
-            <th className="border">Username</th>
-            <th className="border">Image</th>
-            <th className="border">Phone number</th>
-            <th className="border">Is active</th>
-            <th className="border">Thao tác</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td className="p-1 border">Code</td>
-            <td className="p-1 border">Name</td>
-            <td className="p-1 border">Username</td>
-            <td className="p-1 border">Image</td>
-            <td className="p-1 border">Phone number</td>
-            <td className="p-1 border">Is active</td>
-            <td className="p-1 border">
-              <div className="flex gap-2">
-                <button className="w-full border cursor-pointer">Sửa</button>
-                <button className="w-full border cursor-pointer">Xóa</button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table> */}
-
-      <div className="">
+      <div className="border rounded-md py-1">
         <Table>
-          <TableHeader className="">
+          <TableHeader>
             <TableRow>
               <TableHead>Invoice</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Method</TableHead>
               <TableHead>Amount</TableHead>
+              <TableHead>Thao tác</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             <TableRow>
-              <TableCell className="font-medium">INV001</TableCell>
+              <TableCell>INV001</TableCell>
               <TableCell>Paid</TableCell>
               <TableCell>Credit Card</TableCell>
-              <TableCell className="text-right">$250.00</TableCell>
+              <TableCell>$250.00</TableCell>
+              <TableCell className="text-center">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="cursor-pointer">
+                      <MoreHorizontalIcon />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem asChild className="cursor-pointer">
+                      <Link href="users/details">Chi tiết</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild className="cursor-pointer">
+                      <Link href="users/delete">Xóa</Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>
@@ -89,10 +92,16 @@ const User = () => {
 
       <div className="flex gap-2">
         <Button variant="outline" size="icon" className="cursor-pointer">
+          <ChevronsLeft />
+        </Button>
+        <Button variant="outline" size="icon" className="cursor-pointer">
           <ChevronLeft />
         </Button>
         <Button variant="outline" size="icon" className="cursor-pointer">
           <ChevronRight />
+        </Button>
+        <Button variant="outline" size="icon" className="cursor-pointer">
+          <ChevronsRight />
         </Button>
 
         <Select defaultValue="10">
