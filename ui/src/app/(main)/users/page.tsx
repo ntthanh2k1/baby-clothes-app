@@ -1,5 +1,5 @@
-import ActionCreate from "@/components/action/action-create";
-import DataTable from "@/components/data-table/data-table";
+import ActionCreate from "@/src/components/action/action-create";
+import DataTable from "@/src/components/data-table/data-table";
 import { userColumns } from "./_components/user-columns";
 
 const UserListPage = () => {
