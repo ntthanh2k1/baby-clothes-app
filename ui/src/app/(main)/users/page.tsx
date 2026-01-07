@@ -1,9 +1,9 @@
 "use client";
 
-import ActionCreate from "@/src/components/action/action-create";
-import DataTable from "@/src/components/data-table/data-table";
+import ActionCreate from "@/src/common/components/action/action-create";
+import DataTable from "@/src/common/components/data-table/data-table";
 import { userColumns } from "./_components/user-columns";
-import { useDataTable } from "@/src/stores/useDataTable";
+import { useDataTable } from "@/src/common/stores/useDataTable";
 
 const UserListPage = () => {
   // const limit = useDataTable((state) => state.limit);

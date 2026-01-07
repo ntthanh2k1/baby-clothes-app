@@ -2,15 +2,15 @@
 
 import React from "react";
 import { Column } from "../../types/column.type";
-import { Button } from "@/src/components/ui/button";
-import { Input } from "@/src/components/ui/input";
+import { Button } from "@/src/common/components/ui/button";
+import { Input } from "@/src/common/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/src/components/ui/select";
+} from "@/src/common/components/ui/select";
 import {
   Table,
   TableBody,
@@ -18,7 +18,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/src/components/ui/table";
+} from "@/src/common/components/ui/table";
 import {
   ChevronLeft,
   ChevronRight,
@@ -26,7 +26,7 @@ import {
   ChevronsRight,
   Search,
 } from "lucide-react";
-import { useDataTable } from "@/src/stores/useDataTable";
+import { useDataTable } from "@/src/common/stores/useDataTable";
 
 type DataTableProps = {
   // 'key' là special prop của React nên không dùng được, đổi thành 'rowKey'

@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/src/components/ui/button";
-import { Input } from "@/src/components/ui/input";
+import { Button } from "@/src/common/components/ui/button";
+import { Input } from "@/src/common/components/ui/input";
 import { redirect } from "next/navigation";
 import { useState } from "react";
 
