@@ -1,18 +1,112 @@
 import React from "react";
 import { Column } from "./column.type";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+  Search,
+} from "lucide-react";
 
-type DataTableProps<T> = {
-  columns: Column<T>[];
-  data: T[];
+type DataTableProps = {
+  // 'key' là special prop của React nên không dùng được, đổi thành 'rowKey'
+  rowKey: string;
+  columns: Column[];
+  data: any[];
   filters?: React.ReactNode;
+  actionCreate?: React.ReactNode;
 };
 
-const DataTable = <T extends { id: string }>({
+const DataTable = ({
+  rowKey,
   columns,
   data,
   filters,
-}: DataTableProps<T>) => {
-  return <div>DataTable</div>;
+  actionCreate,
+}: DataTableProps) => {
+  return (
+    <>
+      <div className="flex justify-between">
+        <div className="flex gap-2">
+          <Input type="text" placeholder="Tìm kiếm" />
+          <Button variant="outline" className="px-3 py-1 border cursor-pointer">
+            <Search />
+          </Button>
+        </div>
+
+        {actionCreate && actionCreate}
+      </div>
+
+      <div className="border rounded-md py-1">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              {columns.map((column) => (
+                <TableHead key={column.accessor_key}>{column.header}</TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {data.map((row) => (
+              <TableRow key={row[rowKey]}>
+                {columns.map((column) => (
+                  <TableCell key={column.accessor_key}>
+                    {column.cell
+                      ? column.cell(row)
+                      : (row[column.accessor_key as any] as React.ReactNode)}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+
+      <div className="flex gap-2">
+        <Button variant="outline" size="icon" className="cursor-pointer">
+          <ChevronsLeft />
+        </Button>
+        <Button variant="outline" size="icon" className="cursor-pointer">
+          <ChevronLeft />
+        </Button>
+        <Button variant="outline" size="icon" className="cursor-pointer">
+          <ChevronRight />
+        </Button>
+        <Button variant="outline" size="icon" className="cursor-pointer">
+          <ChevronsRight />
+        </Button>
+
+        <Select defaultValue="10">
+          <SelectTrigger className="cursor-pointer">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="10">10</SelectItem>
+            <SelectItem value="20">20</SelectItem>
+            <SelectItem value="50">50</SelectItem>
+            <SelectItem value="100">100</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+    </>
+  );
 };
 
 export default DataTable;

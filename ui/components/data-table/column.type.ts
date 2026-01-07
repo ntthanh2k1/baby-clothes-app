@@ -1,9 +1,12 @@
 import React from "react";
 
-export type Column<T> = {
+export type Column = {
+  // lấy key của column để map
+  accessor_key?: string;
+
+  // tên header
   header: string;
 
-  accessor_key?: keyof T;
-
-  cell?: (row: T) => React.ReactNode;
+  // tùy chỉnh trong cell
+  cell?: (row: any) => React.ReactNode;
 };

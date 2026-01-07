@@ -1,121 +1,41 @@
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  ChevronLeft,
-  ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
-  MoreHorizontalIcon,
-  Plus,
-  Search,
-} from "lucide-react";
-import Link from "next/link";
+import ActionCreate from "@/components/action/action-create";
+import DataTable from "@/components/data-table/data-table";
+import { userColumns } from "./_components/user-columns";
 
 const UserListPage = () => {
+  const data = [
+    {
+      user_id: "1",
+      code: "1",
+      name: "Nguyen Van A",
+      username: "admin",
+      image:
+        "https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      phone_number: "0123456789",
+      is_active: true,
+    },
+    {
+      user_id: "2",
+      code: "2",
+      name: "Nguyen Van B",
+      username: "user",
+      image:
+        "https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+      phone_number: "0123456789",
+      is_active: true,
+    },
+  ];
+
   return (
     <>
-      <div className="flex justify-between">
-        <div className="flex gap-2">
-          <Input type="text" placeholder="Tìm kiếm" />
-          <Button variant="outline" className="px-3 py-1 border cursor-pointer">
-            <Search />
-          </Button>
-        </div>
+      <div className="text-2xl font-semibold">Danh sách người dùng</div>
 
-        <Button variant="outline" asChild>
-          <Link href="/users/create-user" className="cursor-pointer">
-            Tạo mới
-            <Plus />
-          </Link>
-        </Button>
-      </div>
-
-      <div className="border rounded-md py-1">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Invoice</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Method</TableHead>
-              <TableHead>Amount</TableHead>
-              <TableHead>Thao tác</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell>INV001</TableCell>
-              <TableCell>Paid</TableCell>
-              <TableCell>Credit Card</TableCell>
-              <TableCell>$250.00</TableCell>
-              <TableCell className="text-center">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="cursor-pointer">
-                      <MoreHorizontalIcon />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem asChild className="cursor-pointer">
-                      <Link href={`/users/1`}>Chi tiết</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild className="cursor-pointer">
-                      <Link href="users/delete">Xóa</Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </div>
-
-      <div className="flex gap-2">
-        <Button variant="outline" size="icon" className="cursor-pointer">
-          <ChevronsLeft />
-        </Button>
-        <Button variant="outline" size="icon" className="cursor-pointer">
-          <ChevronLeft />
-        </Button>
-        <Button variant="outline" size="icon" className="cursor-pointer">
-          <ChevronRight />
-        </Button>
-        <Button variant="outline" size="icon" className="cursor-pointer">
-          <ChevronsRight />
-        </Button>
-
-        <Select defaultValue="10">
-          <SelectTrigger className="cursor-pointer">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="10">10</SelectItem>
-            <SelectItem value="20">20</SelectItem>
-            <SelectItem value="50">50</SelectItem>
-            <SelectItem value="100">100</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      <DataTable
+        rowKey="user_id"
+        columns={userColumns}
+        data={data}
+        actionCreate={<ActionCreate href="/users/create-user" />}
+      />
     </>
   );
 };
