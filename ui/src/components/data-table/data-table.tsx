@@ -1,5 +1,7 @@
+"use client";
+
 import React from "react";
-import { Column } from "./column.type";
+import { Column } from "../../types/column.type";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import {
@@ -24,12 +26,13 @@ import {
   ChevronsRight,
   Search,
 } from "lucide-react";
+import { useDataTable } from "@/src/stores/useDataTable";
 
 type DataTableProps = {
   // 'key' là special prop của React nên không dùng được, đổi thành 'rowKey'
   rowKey: string;
   columns: Column[];
-  data: any[];
+  data: any;
   filters?: React.ReactNode;
   actionCreate?: React.ReactNode;
 };
@@ -41,6 +44,12 @@ const DataTable = ({
   filters,
   actionCreate,
 }: DataTableProps) => {
+  const setLimit = useDataTable((state) => state.setLimit);
+
+  const handleChangeLimit = (value: string) => {
+    setLimit(Number(value));
+  };
+
   return (
     <>
       <div className="flex justify-between">
@@ -64,7 +73,7 @@ const DataTable = ({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data.map((row) => (
+            {data.data.map((row: any) => (
               <TableRow key={row[rowKey]}>
                 {columns.map((column) => (
                   <TableCell key={column.accessor_key}>
@@ -93,7 +102,7 @@ const DataTable = ({
           <ChevronsRight />
         </Button>
 
-        <Select defaultValue="10">
+        <Select defaultValue="10" onValueChange={handleChangeLimit}>
           <SelectTrigger className="cursor-pointer">
             <SelectValue />
           </SelectTrigger>

@@ -9,6 +9,7 @@ import {
 } from "@/src/components/ui/dropdown-menu";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import Image from "next/image";
 import Link from "next/link";
 
 const Header = () => {
@@ -53,7 +54,15 @@ const Header = () => {
         <div>Username</div>
 
         <DropdownMenu>
-          <DropdownMenuTrigger className="w-10 h-10 border rounded-full cursor-pointer"></DropdownMenuTrigger>
+          <DropdownMenuTrigger asChild>
+            <Image
+              src="https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              alt=""
+              width="40"
+              height="40"
+              className="border rounded-full cursor-pointer"
+            />
+          </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem asChild className="cursor-pointer">
               <Link href="auth/profile">Tài khoản</Link>

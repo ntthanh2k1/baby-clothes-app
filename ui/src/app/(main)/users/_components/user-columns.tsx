@@ -1,4 +1,6 @@
-import { Column } from "@/src/components/data-table/column.type";
+"use client";
+
+import { Column } from "@/src/types/column.type";
 import { Button } from "@/src/components/ui/button";
 import {
   DropdownMenu,
@@ -14,6 +16,7 @@ export const userColumns: Column[] = [
   {
     accessor_key: "code",
     header: "Mã",
+    cell: (user) => <div className="text-center">{user.code}</div>,
   },
   {
     accessor_key: "name",
