@@ -66,7 +66,7 @@ export const userColumns: Column[] = [
             <Link href={`/users/${user.user_id}`}>Chi tiết</Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild className="cursor-pointer">
-            <Link href="#/">Xóa</Link>
+            <Link href="#/">Sao chép ID</Link>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

@@ -3,13 +3,13 @@ import Sidebar from "@/src/app/(main)/_components/sidebar";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <Header />
 
       <div className="flex flex-1">
         <Sidebar />
 
-        <div className="w-full flex flex-col gap-4 m-5">{children}</div>
+        <div className="w-full flex flex-col gap-4 mx-7 my-5">{children}</div>
       </div>
     </div>
   );

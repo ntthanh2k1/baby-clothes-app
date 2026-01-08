@@ -16,7 +16,7 @@ const Header = () => {
   const { setTheme } = useTheme();
 
   return (
-    <div className="h-16 flex items-center justify-between px-5 sticky top-0 border-b">
+    <div className="h-16 flex items-center justify-between px-5 sticky top- border-b">
       <Link href="/" className="text-3xl font-bold">
         Baby Clothes App
       </Link>
@@ -56,7 +56,7 @@ const Header = () => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Image
-              src="https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
               alt=""
               width="40"
               height="40"
