@@ -1,13 +1,13 @@
 "use client";
 
 import { Column } from "@/src/common/types/column.type";
-import { Button } from "@/src/common/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/src/common/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { MoreHorizontalIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";

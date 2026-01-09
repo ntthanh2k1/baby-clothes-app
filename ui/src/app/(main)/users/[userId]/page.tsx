@@ -1,27 +1,71 @@
-import ActionBack from "@/src/common/components/action/action-back";
-import { Button } from "@/src/common/components/ui/button";
-import { Input } from "@/src/common/components/ui/input";
-import Image from "next/image";
+"use client";
 
-const UserDetailPage = async ({
+import { Textarea } from "@/components/ui/textarea";
+import ActionBack from "@/components/action/action-back";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import Image from "next/image";
+import { use, useRef, useState } from "react";
+import { SquarePen } from "lucide-react";
+
+const UserDetailPage = ({
   params,
 }: {
   params: Promise<{ userId: string }>;
 }) => {
-  const { userId } = await params;
+  const { userId } = use(params);
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+
+  // hàm trigger image button
+  const handleImageButton = () => {
+    fileRef.current?.click();
+  };
+  // hàm xử lý xem trước image
+  const handlePreviewImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    const url = URL.createObjectURL(file);
+
+    setPreviewImage(url);
+    console.log(previewImage);
+  };
 
   return (
     <>
       <div className="text-2xl font-semibold">Chi tiết người dùng</div>
 
       <div className="flex flex-col gap-2">
-        <Image
-          src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-          alt=""
-          width="150"
-          height="150"
-          className=""
-        />
+        <div className="flex gap-2">
+          <Image
+            src={
+              previewImage ||
+              "https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            }
+            alt=""
+            width="150"
+            height="150"
+            className="border rounded-full"
+          />
+
+          <Button
+            variant="outline"
+            className="cursor-pointer"
+            onClick={handleImageButton}
+          >
+            <SquarePen />
+          </Button>
+          <Input
+            type="file"
+            className="hidden"
+            ref={fileRef}
+            onChange={handlePreviewImage}
+          />
+        </div>
 
         <div className="flex gap-4">
           <div className="w-full flex flex-col">
@@ -99,9 +143,9 @@ const UserDetailPage = async ({
           </div>
         </div>
 
-        <div className="">
-          <label className="">Ghi chú:</label>
-          <Input required type="text" name="note" className="w-full" />
+        <div>
+          <label>Ghi chú:</label>
+          <Textarea required name="note" className="w-full" />
         </div>
 
         <div className="flex gap-2 my-2">

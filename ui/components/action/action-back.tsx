@@ -8,13 +8,12 @@ import { Button } from "../ui/button";
 // được nên phải tạo logic component riêng
 const ActionBack = () => {
   const router = useRouter();
+  const handleBack = () => {
+    router.back();
+  };
 
   return (
-    <Button
-      variant="outline"
-      className="cursor-pointer"
-      onClick={() => router.back()}
-    >
+    <Button variant="outline" className="cursor-pointer" onClick={handleBack}>
       Quay lại
     </Button>
   );

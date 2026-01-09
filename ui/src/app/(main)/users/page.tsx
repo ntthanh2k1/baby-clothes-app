@@ -1,7 +1,7 @@
 "use client";
 
-import ActionCreate from "@/src/common/components/action/action-create";
-import DataTable from "@/src/common/components/data-table/data-table";
+import ActionCreate from "@/components/action/action-create";
+import DataTable from "@/components/data-table/data-table";
 import { userColumns } from "./_components/user-columns";
 import { useDataTable } from "@/src/common/stores/useDataTable";
 
