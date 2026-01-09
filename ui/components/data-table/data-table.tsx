@@ -23,7 +23,7 @@ import {
   ChevronsRight,
   Search,
 } from "lucide-react";
-import { useDataTable } from "@/src/common/stores/useDataTable";
+import { useDataTableStore } from "@/src/common/stores/use-data-table.store";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Column } from "@/src/common/types/column.type";
@@ -44,7 +44,7 @@ const DataTable = ({
   filters,
   actionCreate,
 }: DataTableProps) => {
-  const setLimit = useDataTable((state) => state.setLimit);
+  const setLimit = useDataTableStore((state) => state.setLimit);
 
   const handleChangeLimit = (value: string) => {
     setLimit(Number(value));

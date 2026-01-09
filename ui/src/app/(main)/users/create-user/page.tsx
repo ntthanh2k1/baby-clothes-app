@@ -7,10 +7,12 @@ import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { SquarePen } from "lucide-react";
 import React, { useRef, useState } from "react";
+import { useImageStore } from "@/src/common/stores/use-image.store";
 
 const CreateUserPage = () => {
   const fileRef = useRef<HTMLInputElement>(null);
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const previewImage = useImageStore((state) => state.image);
+  const setPreviewImage = useImageStore((state) => state.setPreviewImage);
 
   // hàm trigger image button
   const handleImageButton = () => {
@@ -49,6 +51,7 @@ const CreateUserPage = () => {
 
           <Button
             variant="outline"
+            size="icon"
             className="cursor-pointer"
             onClick={handleImageButton}
           >

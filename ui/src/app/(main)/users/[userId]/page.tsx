@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { use, useRef, useState } from "react";
 import { SquarePen } from "lucide-react";
+import { useImageStore } from "@/src/common/stores/use-image.store";
 
 const UserDetailPage = ({
   params,
@@ -15,13 +16,11 @@ const UserDetailPage = ({
 }) => {
   const { userId } = use(params);
   const fileRef = useRef<HTMLInputElement>(null);
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
-
-  // hàm trigger image button
+  const previewImage = useImageStore((state) => state.image);
+  const setPreviewImage = useImageStore((state) => state.setPreviewImage);
   const handleImageButton = () => {
     fileRef.current?.click();
   };
-  // hàm xử lý xem trước image
   const handlePreviewImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
@@ -54,6 +53,7 @@ const UserDetailPage = ({
 
           <Button
             variant="outline"
+            size="icon"
             className="cursor-pointer"
             onClick={handleImageButton}
           >

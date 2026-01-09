@@ -3,7 +3,7 @@
 import ActionCreate from "@/components/action/action-create";
 import DataTable from "@/components/data-table/data-table";
 import { userColumns } from "./_components/user-columns";
-import { useDataTable } from "@/src/common/stores/useDataTable";
+import { useDataTableStore } from "@/src/common/stores/use-data-table.store";
 
 const UserListPage = () => {
   // const limit = useDataTable((state) => state.limit);

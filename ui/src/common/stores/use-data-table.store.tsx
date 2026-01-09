@@ -6,7 +6,7 @@ type DataTableState = {
   setLimit: (limit: number) => void;
 };
 
-export const useDataTable = create<DataTableState>((set) => ({
+export const useDataTableStore = create<DataTableState>((set) => ({
   limit: 10,
 
   setLimit: (limit: number) => {
