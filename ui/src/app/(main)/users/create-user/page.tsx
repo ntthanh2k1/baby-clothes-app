@@ -29,7 +29,6 @@ const CreateUserPage = () => {
     const url = URL.createObjectURL(file);
 
     setPreviewImage(url);
-    console.log(previewImage);
   };
 
   return (
@@ -66,24 +65,24 @@ const CreateUserPage = () => {
         </div>
 
         <div className="">
-          <label className="">Tên:</label>
+          <label>Tên:</label>
           <Input required type="text" name="name" className="w-full" />
         </div>
 
-        <div className="flex gap-5">
-          <div className="w-full flex flex-col">
-            <div className="my-2">
-              <label className="">Username:</label>
+        <div className="flex gap-6">
+          <div className="w-full flex flex-col gap-2">
+            <div>
+              <label>Username:</label>
               <Input required type="text" name="username" className="w-full" />
             </div>
 
-            <div className="my-2">
-              <label className="">Email:</label>
+            <div>
+              <label>Email:</label>
               <Input required type="text" name="email" className="w-full" />
             </div>
 
-            <div className="my-2">
-              <label className="">Mã số thuế:</label>
+            <div>
+              <label>Mã số thuế:</label>
               <Input
                 required
                 type="text"
@@ -92,8 +91,8 @@ const CreateUserPage = () => {
               />
             </div>
 
-            <div className="my-2">
-              <label className="">Ngày sinh:</label>
+            <div>
+              <label>Ngày sinh:</label>
               <Input
                 required
                 type="text"
@@ -103,9 +102,9 @@ const CreateUserPage = () => {
             </div>
           </div>
 
-          <div className="w-full flex flex-col">
-            <div className="my-2">
-              <label className="">Số điện thoại:</label>
+          <div className="w-full flex flex-col gap-2">
+            <div>
+              <label>Số điện thoại:</label>
               <Input
                 required
                 type="text"
@@ -114,8 +113,8 @@ const CreateUserPage = () => {
               />
             </div>
 
-            <div className="my-2">
-              <label className="">CCCD:</label>
+            <div>
+              <label>CCCD:</label>
               <Input
                 required
                 type="text"
@@ -124,13 +123,13 @@ const CreateUserPage = () => {
               />
             </div>
 
-            <div className="my-2">
-              <label className="">Giới tính:</label>
+            <div>
+              <label>Giới tính:</label>
               <Input required type="text" name="gender" className="w-full" />
             </div>
 
-            <div className="my-2">
-              <label className="">Địa chỉ:</label>
+            <div>
+              <label>Địa chỉ:</label>
               <Input required type="text" name="address" className="w-full" />
             </div>
           </div>
@@ -141,10 +140,11 @@ const CreateUserPage = () => {
           <Textarea required name="note" className="w-full" />
         </div>
 
-        <div className="flex gap-2 my-2">
+        <div className="flex gap-2 mt-2">
           <Button variant="outline" className="cursor-pointer">
             Lưu
           </Button>
+
           <ActionBack />
         </div>
       </div>

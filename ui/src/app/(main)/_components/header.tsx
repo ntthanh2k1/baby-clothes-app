@@ -1,77 +1,24 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import Image from "next/image";
 import Link from "next/link";
+import Theme from "./theme";
+import Profile from "./profile";
+import Notifications from "./notifications";
 
 const Header = () => {
-  const { setTheme } = useTheme();
-
   return (
     <div className="h-16 flex items-center justify-between px-5 sticky top- border-b">
       <Link href="/" className="text-3xl font-bold">
         Baby Clothes App
       </Link>
 
-      <div className="flex items-center gap-2">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon" className="cursor-pointer">
-              <Sun className="scale-100 dark:scale-0" />
-              <Moon className="absolute scale-0 dark:scale-100" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem
-              className="cursor-pointer"
-              onClick={() => setTheme("light")}
-            >
-              Light
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              className="cursor-pointer"
-              onClick={() => setTheme("dark")}
-            >
-              Dark
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              className="cursor-pointer"
-              onClick={() => setTheme("system")}
-            >
-              System
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+      <div className="flex items-center gap-4">
+        <Notifications />
 
-        <div>Username</div>
+        <Theme />
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Image
-              src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              alt=""
-              width="40"
-              height="40"
-              className="border rounded-full cursor-pointer"
-            />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem asChild className="cursor-pointer">
-              <Link href="auth/profile">Tài khoản</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild className="cursor-pointer">
-              <Link href="auth/login">Đăng xuất</Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Profile />
       </div>
     </div>
   );

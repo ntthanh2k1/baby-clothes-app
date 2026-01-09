@@ -55,7 +55,12 @@ const DataTable = ({
       <div className="flex justify-between">
         <div className="flex gap-2">
           <Input type="text" placeholder="Tìm kiếm" />
-          <Button variant="outline" className="px-3 py-1 border cursor-pointer">
+
+          <Button
+            variant="outline"
+            size="icon"
+            className="px-3 py-1 border cursor-pointer"
+          >
             <Search />
           </Button>
         </div>
@@ -92,12 +97,15 @@ const DataTable = ({
         <Button variant="outline" size="icon" className="cursor-pointer">
           <ChevronsLeft />
         </Button>
+
         <Button variant="outline" size="icon" className="cursor-pointer">
           <ChevronLeft />
         </Button>
+
         <Button variant="outline" size="icon" className="cursor-pointer">
           <ChevronRight />
         </Button>
+
         <Button variant="outline" size="icon" className="cursor-pointer">
           <ChevronsRight />
         </Button>

@@ -57,7 +57,7 @@ export const userColumns: Column[] = [
     cell: (user) => (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="cursor-pointer">
+          <Button variant="outline" size="icon" className="cursor-pointer">
             <MoreHorizontalIcon />
           </Button>
         </DropdownMenuTrigger>

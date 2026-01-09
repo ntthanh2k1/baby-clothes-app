@@ -27,11 +27,11 @@ const LoginPage = () => {
 
   return (
     <>
-      <div className="mt-5 text-3xl font-bold">Đăng nhập</div>
+      <div className="mt-6 text-3xl font-bold">Đăng nhập</div>
 
-      <div className="flex w-auto p-5 m-5 border rounded-md">
-        <form className="w-sm" onSubmit={handleLogin}>
-          <div className="my-2">
+      <div className="w-md p-6 m-6 border rounded-md">
+        <form className="flex flex-col gap-2" onSubmit={handleLogin}>
+          <div>
             <label className="">Username:</label>
             <Input
               required
@@ -42,7 +42,7 @@ const LoginPage = () => {
             />
           </div>
 
-          <div className="my-2">
+          <div>
             <label className="">Mật khẩu:</label>
             <Input
               required
@@ -53,12 +53,11 @@ const LoginPage = () => {
             />
           </div>
 
-          <Button
-            variant="outline"
-            className="w-full my-2 border cursor-pointer"
-          >
-            Đăng nhập
-          </Button>
+          <div className="flex justify-center mt-2">
+            <Button variant="outline" className="border cursor-pointer">
+              Đăng nhập
+            </Button>
+          </div>
         </form>
       </div>
     </>
