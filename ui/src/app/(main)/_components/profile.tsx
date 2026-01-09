@@ -28,6 +28,9 @@ const Profile = () => {
             <Link href="/auth/profile">Tài khoản</Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild className="cursor-pointer">
+            <Link href="/auth/change-password">Đổi mật khẩu</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild className="cursor-pointer">
             <Link href="/auth/login">Đăng xuất</Link>
           </DropdownMenuItem>
         </DropdownMenuContent>
