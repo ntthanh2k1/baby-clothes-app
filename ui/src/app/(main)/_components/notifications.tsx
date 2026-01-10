@@ -1,7 +1,7 @@
 import { Bell } from "lucide-react";
 
 const Notifications = () => {
-  return <Bell />;
+  return <Bell className="cursor-pointer" />;
 };
 
 export default Notifications;

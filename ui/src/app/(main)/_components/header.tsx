@@ -1,10 +1,9 @@
 "use client";
 
-import { useTheme } from "next-themes";
 import Link from "next/link";
-import Theme from "./theme";
-import Profile from "./profile";
 import Notifications from "./notifications";
+import Theme from "./theme";
+import AuthUser from "./auth-user";
 
 const Header = () => {
   return (
@@ -18,7 +17,7 @@ const Header = () => {
 
         <Theme />
 
-        <Profile />
+        <AuthUser />
       </div>
     </div>
   );

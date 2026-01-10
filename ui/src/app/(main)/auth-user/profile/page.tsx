@@ -1,20 +1,16 @@
 "use client";
 
-import { Textarea } from "@/components/ui/textarea";
 import ActionBack from "@/components/action/action-back";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Image from "next/image";
-import { use, useRef } from "react";
-import { SquarePen } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
 import { useImageStore } from "@/src/common/stores/use-image.store";
+import { SquarePen } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useRef } from "react";
 
-const UserDetailPage = ({
-  params,
-}: {
-  params: Promise<{ userId: string }>;
-}) => {
-  const { userId } = use(params);
+const ProfilePage = () => {
   const fileRef = useRef<HTMLInputElement>(null);
   const previewImage = useImageStore((state) => state.image);
   const setPreviewImage = useImageStore((state) => state.setPreviewImage);
@@ -153,8 +149,8 @@ const UserDetailPage = ({
             Lưu
           </Button>
 
-          <Button variant="destructive" className="cursor-pointer">
-            Xóa
+          <Button asChild variant="outline" className="border cursor-pointer">
+            <Link href="/auth-user/change-password">Đổi mật khẩu</Link>
           </Button>
 
           <ActionBack />
@@ -164,4 +160,4 @@ const UserDetailPage = ({
   );
 };
 
-export default UserDetailPage;
+export default ProfilePage;

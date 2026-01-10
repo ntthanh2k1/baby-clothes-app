@@ -8,7 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const Profile = () => {
+const AuthUser = () => {
   return (
     <div className="flex items-center gap-2">
       <div>Username</div>
@@ -25,10 +25,10 @@ const Profile = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem asChild className="cursor-pointer">
-            <Link href="/auth/profile">Tài khoản</Link>
+            <Link href="/auth-user/profile">Tài khoản</Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild className="cursor-pointer">
-            <Link href="/auth/change-password">Đổi mật khẩu</Link>
+            <Link href="/auth-user/change-password">Đổi mật khẩu</Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild className="cursor-pointer">
             <Link href="/auth/login">Đăng xuất</Link>
@@ -39,4 +39,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default AuthUser;

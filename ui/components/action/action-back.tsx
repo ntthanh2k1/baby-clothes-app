@@ -13,7 +13,7 @@ const ActionBack = () => {
   };
 
   return (
-    <Button variant="outline" className="cursor-pointer" onClick={handleBack}>
+    <Button variant="secondary" className="cursor-pointer" onClick={handleBack}>
       Quay lại
     </Button>
   );
