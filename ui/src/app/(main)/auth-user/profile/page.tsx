@@ -32,7 +32,19 @@ const ProfilePage = () => {
 
   return (
     <>
-      <div className="text-2xl font-semibold">Chi tiết người dùng</div>
+      <div className="flex gap-2 p-2 sticky top-16 bg-card border-x border-b rounded-b-md">
+        <Button variant="outline" className="cursor-pointer">
+          Lưu
+        </Button>
+
+        <Button asChild variant="outline" className="border cursor-pointer">
+          <Link href="/auth-user/change-password">Đổi mật khẩu</Link>
+        </Button>
+
+        <ActionBack />
+      </div>
+
+      <div className="text-2xl font-semibold">Thông tin tài khoản</div>
 
       <div className="flex flex-col gap-2">
         <div className="flex gap-2">
@@ -44,7 +56,7 @@ const ProfilePage = () => {
             alt=""
             width="150"
             height="150"
-            className="border rounded-full"
+            className="w-37.5 h-37.5 border rounded-full"
           />
 
           <Button
@@ -142,18 +154,6 @@ const ProfilePage = () => {
         <div>
           <label>Ghi chú:</label>
           <Textarea required name="note" className="w-full" />
-        </div>
-
-        <div className="flex gap-2 mt-2">
-          <Button variant="outline" className="cursor-pointer">
-            Lưu
-          </Button>
-
-          <Button asChild variant="outline" className="border cursor-pointer">
-            <Link href="/auth-user/change-password">Đổi mật khẩu</Link>
-          </Button>
-
-          <ActionBack />
         </div>
       </div>
     </>

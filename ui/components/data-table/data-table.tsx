@@ -73,7 +73,9 @@ const DataTable = ({
           <TableHeader>
             <TableRow>
               {columns.map((column) => (
-                <TableHead key={column.accessor_key}>{column.header}</TableHead>
+                <TableHead className="text-left" key={column.accessor_key}>
+                  {column.header}
+                </TableHead>
               ))}
             </TableRow>
           </TableHeader>

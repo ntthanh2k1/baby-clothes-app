@@ -13,7 +13,6 @@ export const customerColumns: Column[] = [
   {
     accessor_key: "code",
     header: "Mã",
-    cell: (customer) => <div className="text-center">{customer.code}</div>,
   },
   {
     accessor_key: "name",
@@ -22,40 +21,31 @@ export const customerColumns: Column[] = [
   {
     accessor_key: "phone_number",
     header: "Số điện thoại",
-    cell: (customer) => (
-      <div className="text-center">{customer.phone_number}</div>
-    ),
   },
   {
     accessor_key: "is_active",
     header: "Trạng thái hoạt động",
-    cell: (customer) => (
-      <div className="text-center">
-        {customer.is_active ? "Hoạt động" : "Khóa"}
-      </div>
-    ),
+    cell: (customer) => (customer.is_active ? "Hoạt động" : "Khóa"),
   },
   {
     accessor_key: "action",
     header: "Thao tác",
     cell: (customer) => (
-      <div className="text-center">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="icon" className="cursor-pointer">
-              <MoreHorizontalIcon />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem asChild className="cursor-pointer">
-              <Link href={`/customers/${customer.user_id}`}>Chi tiết</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild className="cursor-pointer">
-              <Link href="#/">Sao chép ID</Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline" size="icon" className="cursor-pointer">
+            <MoreHorizontalIcon />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuItem asChild className="cursor-pointer">
+            <Link href={`/customers/${customer.user_id}`}>Chi tiết</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild className="cursor-pointer">
+            <Link href="#/">Sao chép ID</Link>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     ),
   },
 ];

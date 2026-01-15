@@ -6,7 +6,7 @@ import { userColumns } from "./_components/user-columns";
 import { useDataTableStore } from "@/src/common/stores/use-data-table.store";
 
 const UserListPage = () => {
-  // const limit = useDataTable((state) => state.limit);
+  const limit = useDataTableStore((state) => state.limit);
   const data = {
     data: [
       {

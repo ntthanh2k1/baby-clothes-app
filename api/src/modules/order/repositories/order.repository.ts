@@ -24,25 +24,20 @@ export class OrderRepository
       .leftJoin('entity.user', 'user', 'user.is_deleted = false')
       .leftJoin('entity.customer', 'customer', 'customer.is_deleted = false');
 
-    search_by[search_by.indexOf('user_code')] = 'user.code';
     search_by[search_by.indexOf('user_name')] = 'user.name';
-    search_by[search_by.indexOf('customer_code')] = 'customer.code';
     search_by[search_by.indexOf('customer_name')] = 'customer.name';
 
     queryBuilder.select([
       'entity.order_id',
       'entity.code',
+      'entity.order_date',
       'entity.type',
-      'entity.total_cost',
       'entity.total_amount',
-      'entity.created_at',
 
       'user.user_id',
-      'user.code',
       'user.name',
 
       'customer.customer_id',
-      'customer.code',
       'customer.name',
     ]);
 
