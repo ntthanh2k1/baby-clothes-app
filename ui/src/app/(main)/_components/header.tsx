@@ -7,7 +7,7 @@ import AuthUser from "./auth-user";
 
 const Header = () => {
   return (
-    <div className="h-16 flex items-center justify-between px-5 sticky top- border-b">
+    <div className="h-16 flex items-center justify-between px-5 sticky top-0 bg-card border-b">
       <Link href="/" className="text-3xl font-bold">
         Baby Clothes App
       </Link>

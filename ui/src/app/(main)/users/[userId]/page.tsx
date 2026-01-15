@@ -36,6 +36,18 @@ const UserDetailPage = ({
 
   return (
     <>
+      <div className="flex gap-2 p-2 sticky top-16 bg-card border-x border-b rounded-b-md">
+        <Button variant="outline" className="cursor-pointer">
+          Lưu
+        </Button>
+
+        <Button variant="destructive" className="cursor-pointer">
+          Xóa
+        </Button>
+
+        <ActionBack />
+      </div>
+
       <div className="text-2xl font-semibold">Chi tiết người dùng</div>
 
       <div className="flex flex-col gap-2">
@@ -71,7 +83,7 @@ const UserDetailPage = ({
           <div className="w-full flex flex-col gap-2">
             <div>
               <label>Mã:</label>
-              <Input disabled type="text" name="code" className="w-full" />
+              <Input readOnly type="text" name="code" className="w-full" />
             </div>
 
             <div>
@@ -146,18 +158,6 @@ const UserDetailPage = ({
         <div>
           <label>Ghi chú:</label>
           <Textarea required name="note" className="w-full" />
-        </div>
-
-        <div className="flex gap-2 mt-2">
-          <Button variant="outline" className="cursor-pointer">
-            Lưu
-          </Button>
-
-          <Button variant="destructive" className="cursor-pointer">
-            Xóa
-          </Button>
-
-          <ActionBack />
         </div>
       </div>
     </>

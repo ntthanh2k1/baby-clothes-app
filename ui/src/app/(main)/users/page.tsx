@@ -50,7 +50,7 @@ const UserListPage = () => {
 
   return (
     <>
-      <div className="text-2xl font-semibold">Danh sách người dùng</div>
+      <div className="mt-4 text-2xl font-semibold">Danh sách người dùng</div>
 
       <DataTable
         rowKey="user_id"

@@ -33,6 +33,14 @@ const CreateUserPage = () => {
 
   return (
     <>
+      <div className="flex gap-2 p-2 sticky top-16 bg-card border-x border-b rounded-b-md">
+        <Button variant="outline" className="cursor-pointer">
+          Lưu
+        </Button>
+
+        <ActionBack />
+      </div>
+
       <div className="text-2xl font-semibold">Tạo mới người dùng</div>
 
       <div className="flex flex-col gap-2">
@@ -64,7 +72,7 @@ const CreateUserPage = () => {
           />
         </div>
 
-        <div className="">
+        <div>
           <label>Tên:</label>
           <Input required type="text" name="name" className="w-full" />
         </div>
@@ -138,14 +146,6 @@ const CreateUserPage = () => {
         <div>
           <label>Ghi chú:</label>
           <Textarea required name="note" className="w-full" />
-        </div>
-
-        <div className="flex gap-2 mt-2">
-          <Button variant="outline" className="cursor-pointer">
-            Lưu
-          </Button>
-
-          <ActionBack />
         </div>
       </div>
     </>
