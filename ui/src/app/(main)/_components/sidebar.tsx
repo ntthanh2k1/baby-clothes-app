@@ -1,13 +1,32 @@
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 const Sidebar = () => {
   return (
-    <div className="w-1/5 flex flex-col pt-5 pl-5 border-r">
-      <Link href="/orders">Đơn hàng</Link>
+    <div className="w-1/5 flex flex-col gap-1 pt-5 border-r">
+      <Button
+        asChild
+        variant="outline"
+        className="justify-start border-none rounded-none shadow-none cursor-pointer"
+      >
+        <Link href="/orders">Đơn hàng</Link>
+      </Button>
 
-      <Link href="/customers">Khách hàng</Link>
+      <Button
+        asChild
+        variant="outline"
+        className="justify-start border-none rounded-none shadow-none cursor-pointer"
+      >
+        <Link href="/customers">Khách hàng</Link>
+      </Button>
 
-      <Link href="/users">Người dùng</Link>
+      <Button
+        asChild
+        variant="outline"
+        className="justify-start border-none rounded-none shadow-none cursor-pointer"
+      >
+        <Link href="/users">Người dùng</Link>
+      </Button>
     </div>
   );
 };
