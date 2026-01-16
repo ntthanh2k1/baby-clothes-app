@@ -54,9 +54,7 @@ const LoginPage = () => {
           </div>
 
           <div className="flex justify-center mt-2">
-            <Button variant="outline" className="border cursor-pointer">
-              Đăng nhập
-            </Button>
+            <Button className="border cursor-pointer">Đăng nhập</Button>
           </div>
         </form>
       </div>

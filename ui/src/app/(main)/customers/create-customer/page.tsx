@@ -7,9 +7,7 @@ const CreateCustomerPage = () => {
   return (
     <>
       <div className="flex gap-2 p-2 sticky top-16 bg-card border-x border-b rounded-b-md">
-        <Button variant="outline" className="cursor-pointer">
-          Lưu
-        </Button>
+        <Button className="cursor-pointer">Lưu</Button>
 
         <ActionBack />
       </div>
