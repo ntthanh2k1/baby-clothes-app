@@ -86,7 +86,7 @@ const DataTable = ({
                   <TableCell key={column.accessor_key}>
                     {column.cell
                       ? column.cell(row)
-                      : (row[column.accessor_key as any] as React.ReactNode)}
+                      : (row[column.accessor_key as string] as React.ReactNode)}
                   </TableCell>
                 ))}
               </TableRow>

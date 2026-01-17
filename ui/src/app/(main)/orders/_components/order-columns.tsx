@@ -28,12 +28,14 @@ export const orderColumns: Column[] = [
     header: "Loại đơn",
   },
   {
-    accessor_key: "user_name",
+    accessor_key: "user",
     header: "Người tạo đơn",
+    cell: (order) => <>{order.user?.name ?? null}</>,
   },
   {
-    accessor_key: "customer_name",
+    accessor_key: "customer",
     header: "Khách hàng",
+    cell: (order) => <>{order.customer?.name ?? null}</>,
   },
   {
     accessor_key: "action",

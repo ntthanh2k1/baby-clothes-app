@@ -1,7 +1,13 @@
 import ActionBack from "@/components/action/action-back";
 import { Button } from "@/components/ui/button";
+import { use } from "react";
 
-const OrderDetailPage = () => {
+const OrderDetailPage = ({
+  params,
+}: {
+  params: Promise<{ orderId: string }>;
+}) => {
+  const { orderId } = use(params);
   return (
     <>
       <div className="flex gap-2 p-2 sticky top-16 bg-card border-x border-b rounded-b-md">
@@ -19,6 +25,8 @@ const OrderDetailPage = () => {
       </div>
 
       <div className="text-2xl font-semibold">Chi tiết đơn hàng</div>
+
+      <div></div>
     </>
   );
 };

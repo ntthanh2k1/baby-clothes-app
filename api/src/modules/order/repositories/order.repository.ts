@@ -33,6 +33,7 @@ export class OrderRepository
       'entity.order_date',
       'entity.type',
       'entity.total_amount',
+      'entity.created_at',
 
       'user.user_id',
       'user.name',
