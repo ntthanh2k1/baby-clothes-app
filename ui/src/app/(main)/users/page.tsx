@@ -55,7 +55,7 @@ const UserListPage = () => {
       <DataTable
         rowKey="user_id"
         columns={userColumns}
-        data={data}
+        data={data.data}
         actionCreate={<ActionCreate href="/users/create-user" />}
       />
     </>

@@ -32,7 +32,7 @@ const CustomerListPage = () => {
       <DataTable
         rowKey="customer_id"
         columns={customerColumns}
-        data={data}
+        data={data.data}
         actionCreate={<ActionCreate href="/customers/create-customer" />}
       />
     </>

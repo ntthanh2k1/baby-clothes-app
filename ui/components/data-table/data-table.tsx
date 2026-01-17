@@ -32,8 +32,8 @@ type DataTableProps = {
   // 'key' là special prop của React nên không dùng được, đổi thành 'rowKey'
   rowKey: string;
   columns: Column[];
-  data: any;
-  filters?: React.ReactNode;
+  data: any[];
+  actionFilter?: React.ReactNode;
   actionCreate?: React.ReactNode;
 };
 
@@ -41,7 +41,7 @@ const DataTable = ({
   rowKey,
   columns,
   data,
-  filters,
+  actionFilter,
   actionCreate,
 }: DataTableProps) => {
   const setLimit = useDataTableStore((state) => state.setLimit);
@@ -65,6 +65,8 @@ const DataTable = ({
           </Button>
         </div>
 
+        {actionFilter && actionFilter}
+
         {actionCreate && actionCreate}
       </div>
 
@@ -80,17 +82,30 @@ const DataTable = ({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data.data.map((row: any) => (
-              <TableRow key={row[rowKey]}>
-                {columns.map((column) => (
-                  <TableCell key={column.accessor_key}>
-                    {column.cell
-                      ? column.cell(row)
-                      : (row[column.accessor_key as string] as React.ReactNode)}
-                  </TableCell>
-                ))}
+            {data.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  No results.
+                </TableCell>
               </TableRow>
-            ))}
+            ) : (
+              data.map((row: any) => (
+                <TableRow key={row[rowKey]}>
+                  {columns.map((column) => (
+                    <TableCell key={column.accessor_key}>
+                      {column.cell
+                        ? column.cell(row)
+                        : (row[
+                            column.accessor_key as string
+                          ] as React.ReactNode)}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </div>

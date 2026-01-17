@@ -57,7 +57,7 @@ const OrderListPage = () => {
       <DataTable
         rowKey="order_id"
         columns={orderColumns}
-        data={data}
+        data={data.data}
         actionCreate={<ActionCreate href="/orders/create-order" />}
       />
     </>
